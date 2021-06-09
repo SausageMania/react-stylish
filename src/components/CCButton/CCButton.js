@@ -16,26 +16,17 @@ const useStyles = createUseStyles(theme => ({
     },
     height: props => props.height ? props.height : 'auto',
     color: props => {
-      if(props.variant === "contained") return "#FFFFFF";
-      else {
-        if (props.color === "selected") return "#FFFFFF";
-        if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
-        // if (props.color === "icon") return theme.palette.icon;
-        // if (props.color === "error") return theme.palette.error.main;
-        // if (props.color === "sub") return theme.palette.sub.main;
-        // if (props.color === "primary") return theme.palette.primary.main;
-        // if (props.color === "secondary") return theme.palette.secondary.main;
-        return props.color ? props.color : "#015384";
-      }
+      if (props.variant === "contained" || props.selected) return "#FFFFFF";
+      if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
+      return props.color ? props.color : theme.palette.primary.main;
     },
     background: props => {
       if(props.variant === "contained"){
-        if (props.disabled) return "rgba(0, 0, 0, 0.12)";
         if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
         return props.color ? props.color : theme.palette.primary.main;
       }
       else {
-        if (props.color === "selected") return theme.palette.selected.main;
+        if (props.selected) return theme.palette.selected.main;
         return "none";
       }
     },
@@ -45,12 +36,12 @@ const useStyles = createUseStyles(theme => ({
       return "14px";
     },
     border: props => {
-      if(props.variant === "outlined" && props.color !== "selected") {
-        if (props.disabled) return `1px solid rgba(0, 0, 0, 0.12)`;
-        if (theme.palette?.[props.color]) return `1px solid ${theme.palette?.[props.color].main}80`;
+      if (props.selected) return "none";
+      if (props.variant === "outlined") {
+        if (theme.palette?.[props.color]) 
+          return `1px solid ${theme.palette?.[props.color].main}80`;
         return props.color ? `1px solid ${props.color}` : "1px solid rgba(0, 0, 0, 0.23)";
       }
-      if(props.disabled) return "rgba(0, 0, 0, 0.12)"
       return "none";
     },
     borderRadius: props => {
@@ -64,46 +55,36 @@ const useStyles = createUseStyles(theme => ({
     fontWeight: "500",
     padding: props => {
       if(props.size === "small") {
-        if(props.variant === "outlined" || props.color === "selected") return "1.5px 7px";
+        if(props.variant === "outlined" || props.selected) return "1.5px 7px";
         return "1.5px 8px";
       }
-      if(props.variant === "outlined" || props.color === "selected") return "6px 15.5px";
+      if(props.variant === "outlined" || props.selected) return "6px 15.5px";
       return "6px 16.5px";
     },
     lineHeight: "1.75",
-    cursor: props => props.disabled ? "normal" : "pointer",
+    cursor: "pointer",
     transition: "background-color 250ms",
     overflow: "hidden",
     position: "relative",
     boxSizing: "border-box",
     boxShadow: props => {
-      if(props.variant === "contained" && !props.disabled)
+      if(props.variant === "contained")
         return "0px 3px 1px -2px rgba(0, 0, 0, 0.2)," + 
                 "0px 2px 2px 0px rgba(0 , 0, 0, 0.14)," +
                 "0px 1px 5px 0px rgba(0, 0, 0, 0.12)"
     },
     "&:hover": {
       background: props => {
-        if(props.variant === "contained"){
-          if(props.disabled) return "rgba(0, 0, 0, 0.12)";
-          if(theme.palette?.[props.color]) return theme.palette?.[props.color].dark;
+        if (props.selected) return theme.palette.selected.dark;
+        
+        if (props.variant === "contained"){
+          if (props.disabled) return "rgba(0, 0, 0, 0.12)";
+          if (theme.palette?.[props.color]) return theme.palette?.[props.color].dark;
           return props.color ? props.color : theme.palette.primary.dark;
         }
-        else{
-          if (props.disabled) return "none";
-          if (props.color === "selected") return theme.palette.selected.dark;
-          return "rgb(236, 236, 236)";
-        }
+        if (props.disabled) return "none";
+        return "rgb(236, 236, 236)";
       },
-      // filter: props => {
-      //   if(props.variant === "contained"){
-      //     if(!props.disabled && props.color !== "selected" &&
-      //     props.color !== "error" && props.color !== "sub" && 
-      //     props.color !== "primary" && props.color !== "secondary") 
-      //       return "brightness(80%)"
-      //   }
-      //   return "none";
-      // },
     },
     "&:active": {
       boxShadow: props => {
@@ -117,13 +98,16 @@ const useStyles = createUseStyles(theme => ({
     },
     "&:disabled": {
       color: props => {
-        if (props.color === "selected") return "#ffffff";
+        if (props.selected) return "#ffffff";
         return "rgba(0, 0, 0, 0.38)";
       },
-      backgroundColor: props => {
-        if (props.color === "selected") return theme.palette.selected.main;
+      background: props => {
+        if (props.selected) return theme.palette.selected.main;
+        if (props.variant === "contained") return "rgba(0, 0, 0, 0.12)";
         return "none";
       },
+      boxShadow: "none",
+      cursor: "default",
     }
   },
   ripple: {
@@ -131,12 +115,8 @@ const useStyles = createUseStyles(theme => ({
     height: "5px",
     position: "absolute",
     background: props => {
-      if(props.variant === "contained") return "#FFFFFF";
+      if (props.variant === "contained") return "#FFFFFF";
       if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
-        // if (props.color === "error") return theme.palette.error.main;
-        // if (props.color === "sub") return theme.palette.sub.main;
-        // if (props.color === "primary") return theme.palette.primary.main;
-        // if (props.color === "secondary") return theme.palette.secondary.main;
       return props.color ? props.color : theme.palette.primary.main;
     },
     display: "block",
@@ -186,7 +166,7 @@ const useStyles = createUseStyles(theme => ({
 
 const CCButton = (props) => {
   const classes = useStyles(props);
-  const {children, onMouseDown, startIcon, endIcon, fullWidth, ...others} = props;
+  const {children, onMouseDown, startIcon, endIcon, fullWidth, selected, ...others} = props;
 
   const [coords, setCoords] = useState({x: -1, y: -1});
   const [isRippling, setIsRippling] = useState(false);
@@ -228,9 +208,18 @@ CCButton.propTypes = {
   color: PropTypes.string,
   variant: PropTypes.oneOf(["outlined", "contained", "text"]),
   disabled: PropTypes.bool,
+  selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
   startIcon: PropTypes.object,
-  endIcon: PropTypes.object
+  endIcon: PropTypes.object,
 };
+
+CCButton.defaultProps = {
+  color: "primary",
+  variant: "text",
+  disabled: false,
+  selected: false,
+  size: "medium",
+}
 
 export default CCButton;

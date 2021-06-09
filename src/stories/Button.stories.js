@@ -31,13 +31,14 @@ export const ButtonList = () => (
         {variants.map(variant => (
           <tr key={variant}>
             <th style={{textAlign: "left", width: "100px"}}>{variant.toUpperCase()}</th>
-            {colors.map(color => 
+            {colors.map((color) => 
               <td key={color}>
                 <CCButton 
                   variant={variant} 
                   color={color} 
                   startIcon={<Search />} 
                   onClick={action(variant)}
+                  selected={color === "selected"}
                 >
                   Button
                 </CCButton>
@@ -75,6 +76,7 @@ export const ButtonList = () => (
                   size="small"
                   endIcon={<Search />}
                   onClick={action(variant)}
+                  selected={color === "selected"}
                 >
                   Button
                 </CCButton>
