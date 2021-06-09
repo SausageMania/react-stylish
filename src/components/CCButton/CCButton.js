@@ -76,7 +76,6 @@ const useStyles = createUseStyles(theme => ({
     "&:hover": {
       background: props => {
         if (props.selected) return theme.palette.selected.dark;
-        
         if (props.variant === "contained"){
           if (props.disabled) return "rgba(0, 0, 0, 0.12)";
           if (theme.palette?.[props.color]) return theme.palette?.[props.color].dark;
@@ -106,6 +105,7 @@ const useStyles = createUseStyles(theme => ({
         if (props.variant === "contained") return "rgba(0, 0, 0, 0.12)";
         return "none";
       },
+      border: props => props.variant === "outlined" ? "1px solid rgba(0, 0, 0, 0.12)" : "none",
       boxShadow: "none",
       cursor: "default",
     }

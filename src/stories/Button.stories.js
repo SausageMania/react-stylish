@@ -10,20 +10,20 @@ export default {
   decorators: [withKnobs]
 };
 
-const variants = ["outlined", "contained", "text"];
+const variants = ["text", "outlined", "contained"];
 const options = ["primary", "secondary", "error", "sub", "icon", "selected", "purple"];
 
 export const ButtonList = () => (
   <div style={{overflow:"auto"}}>
-    <h2>
+    <h2 >
       Medium Size
-      <div style={{width:"100%", border: "0.5px solid rgb(220,220,220)"}}/>
+      <div style={{border: "1px solid rgb(220,220,220)"}}/>
     </h2>
     <table>
       <thead>
         <tr>
           <th></th>
-          {options.map(color => <th key={color}>{color === "purple" ? "custom" : color}</th>)}
+          {options.map(option => <th key={option}>{option === "purple" ? "custom" : option}</th>)}
           <th>disabled</th>
           <th>disableRipple</th>
         </tr>
@@ -73,7 +73,7 @@ export const ButtonList = () => (
       <thead>
         <tr>
           <th></th>
-          {options.map(color => <th key={color}>{color === "purple" ? "custom" : color}</th>)}
+          {options.map(option => <th key={option}>{option === "purple" ? "custom" : option}</th>)}
           <th>disabled</th>
           <th>disableRipple</th>
         </tr>
@@ -82,15 +82,15 @@ export const ButtonList = () => (
         {variants.map(variant => (
           <tr key={variant}>
             <th style={{textAlign: "left", width: "100px"}}>{variant.toUpperCase()}</th>
-            {options.map(color => 
-              <td key={color}>
+            {options.map(option => 
+              <td key={option}>
                 <CCButton 
                   variant={variant} 
-                  color={color} 
+                  color={option} 
                   size="small"
                   endIcon={<Search />}
                   onClick={action(variant)}
-                  selected={color === "selected"}
+                  selected={option === "selected"}
                 >
                   Button
                 </CCButton>
