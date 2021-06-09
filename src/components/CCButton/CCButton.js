@@ -92,7 +92,7 @@ const useStyles = createUseStyles(theme => ({
                   "0px 2px 2px 0px rgba(0 , 0, 0, 0.14)," +
                   "0px 1px 5px 0px rgba(0, 0, 0, 0.12)," +
                   "0px 5px 10px 3px rgba(0, 0, 0, 0.16)"
-        return "none"
+        return "none";
       },
     },
     "&:disabled": {
@@ -209,6 +209,7 @@ const CCButton = (props) => {
 CCButton.propTypes = {
   color: PropTypes.string,
   variant: PropTypes.oneOf(["outlined", "contained", "text"]),
+  round: PropTypes.number,
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
@@ -220,6 +221,7 @@ CCButton.propTypes = {
 CCButton.defaultProps = {
   color: "primary",
   variant: "text",
+  round: 2,
   disabled: false,
   selected: false,
   size: "medium",
