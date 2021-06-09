@@ -166,7 +166,7 @@ const useStyles = createUseStyles(theme => ({
 
 const CCButton = (props) => {
   const classes = useStyles(props);
-  const {children, onMouseDown, startIcon, endIcon, fullWidth, selected, ...others} = props;
+  const {children, onMouseDown, startIcon, endIcon, fullWidth, disableRipple, ...others} = props;
 
   const [coords, setCoords] = useState({x: -1, y: -1});
   const [isRippling, setIsRippling] = useState(false);
@@ -178,9 +178,11 @@ const CCButton = (props) => {
   },[coords]);
 
   const onMouseDownHandle = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setIsRippling(false);
-    setCoords({x: e.clientX - rect.left, y: e.clientY - rect.top});
+    if (!disableRipple){
+      const rect = e.currentTarget.getBoundingClientRect();
+      setIsRippling(false);
+      setCoords({x: e.clientX - rect.left, y: e.clientY - rect.top});
+    }
     onMouseDown && onMouseDown();
   }
 
@@ -210,6 +212,7 @@ CCButton.propTypes = {
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
+  disableRipple: PropTypes.bool,
   startIcon: PropTypes.object,
   endIcon: PropTypes.object,
 };
@@ -220,6 +223,7 @@ CCButton.defaultProps = {
   disabled: false,
   selected: false,
   size: "medium",
+  disableRipple: false,
 }
 
 export default CCButton;
