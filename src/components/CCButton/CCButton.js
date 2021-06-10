@@ -160,8 +160,8 @@ const useStyles = createUseStyles(theme => ({
     "& > svg " : {
       fontSize: props => props.size === "small" ? "20px" : "24px",
     },
-    marginLeft: props => props.size === "small" ? "-2px" :"-4px",
-    marginRight: props => props.size === "small" ? "6px" :"8px"
+    marginLeft: props => props.size === "small" ? "-2px" : "-4px",
+    marginRight: props => props.size === "small" ? "6px" : "8px"
   },
   endIcon: {
     display: "flex",
@@ -170,8 +170,8 @@ const useStyles = createUseStyles(theme => ({
     "& > svg " : {
       fontSize: props => props.size === "small" ? "20px" : "24px",
     },
-    marginLeft: props => props.size === "small" ? "6px" :"8px",
-    marginRight: props => props.size === "small" ? "-2px" :"-4px"
+    marginLeft: props => props.size === "small" ? "6px" : "8px",
+    marginRight: props => props.size === "small" ? "-2px" : "-4px"
   }
 }));
 
@@ -224,13 +224,13 @@ CCButton.propTypes = {
     PropTypes.string
   ]),
   variant: PropTypes.oneOf(["text", "outlined", "contained", "dashed"]),
-  round: PropTypes.number,
+  round: PropTypes.number,  //1부터 10 사이의 값을 가짐. 낮을수록 각이 지며, 높을수록 동그레짐. (default: 3)
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
   disableRipple: PropTypes.bool,
-  startIcon: PropTypes.element,
-  endIcon: PropTypes.element,
+  startIcon: PropTypes.node,
+  endIcon: PropTypes.node,
 };
 
 CCButton.defaultProps = {
