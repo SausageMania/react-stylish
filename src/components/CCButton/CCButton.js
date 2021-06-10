@@ -188,6 +188,7 @@ const CCButton = (props) => {
     }else setIsRippling(false);
   },[coords]);
 
+  // mouseDown event 발생시 ripple 활성화
   const onMouseDownHandle = (e) => {
     if (!disableRipple){
       const rect = e.currentTarget.getBoundingClientRect();
