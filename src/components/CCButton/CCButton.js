@@ -21,14 +21,12 @@ const useStyles = createUseStyles(theme => ({
       return props.color ? props.color : theme.palette.primary.main;
     },
     background: props => {
+      if (props.selected) return theme.palette.selected.main;
       if(props.variant === "contained"){
         if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
         return props.color ? props.color : theme.palette.primary.main;
       }
-      else {
-        if (props.selected) return theme.palette.selected.main;
-        return "none";
-      }
+      return "none";
     },
     fontSize: props => {
       if(props.size === "medium") return "14px";
@@ -40,13 +38,18 @@ const useStyles = createUseStyles(theme => ({
       if (props.variant === "outlined") {
         if (theme.palette?.[props.color]) 
           return `1px solid ${theme.palette?.[props.color].main}80`;
-        return props.color ? `1px solid ${props.color}` : "1px solid rgba(0, 0, 0, 0.23)";
+        return props.color ? `1px solid ${props.color}80` : "1px solid rgba(0, 0, 0, 0.23)";
+      }
+      if (props.variant === "dashed") {
+        if(theme.palette?.[props.color])
+          return `1px dashed ${theme.palette?.[props.color].main}`;
+        return props.color ? `1px dashed ${props.color}` : "1px dashed rgba(0, 0, 0, 0.23)";
       }
       return "none";
     },
     borderRadius: props => {
-      if(props.round){
-        const round = parseInt(props.round) * 2;
+      if (props.round){
+        const round = (props.round - 1) * 2;
         return `${round}px`;
       }
       return "4px";
@@ -55,10 +58,12 @@ const useStyles = createUseStyles(theme => ({
     fontWeight: "500",
     padding: props => {
       if(props.size === "small") {
-        if(props.variant === "outlined" || props.selected) return "1.5px 7px";
+        if((props.variant === "outlined" || props.variant === "dashed") && !props.selected) 
+          return "0.5px 7px";
         return "1.5px 8px";
       }
-      if(props.variant === "outlined" || props.selected) return "6px 15.5px";
+      if((props.variant === "outlined" || props.variant === "dashed") && !props.selected) 
+        return "5px 15.5px";
       return "6px 16.5px";
     },
     lineHeight: "1.75",
@@ -70,13 +75,13 @@ const useStyles = createUseStyles(theme => ({
     boxShadow: props => {
       if(props.variant === "contained")
         return "0px 3px 1px -2px rgba(0, 0, 0, 0.2)," + 
-                "0px 2px 2px 0px rgba(0 , 0, 0, 0.14)," +
+                "0px 2px 2px 0px rgba(0, 0, 0, 0.14)," +
                 "0px 1px 5px 0px rgba(0, 0, 0, 0.12)"
     },
     "&:hover": {
       background: props => {
         if (props.selected) return theme.palette.selected.dark;
-        if (props.variant === "contained"){
+        if (props.variant === "contained") {
           if (props.disabled) return "rgba(0, 0, 0, 0.12)";
           if (theme.palette?.[props.color]) return theme.palette?.[props.color].dark;
           return props.color ? props.color : theme.palette.primary.dark;
@@ -89,7 +94,7 @@ const useStyles = createUseStyles(theme => ({
       boxShadow: props => {
         if(props.variant === "contained" && !props.disabled) 
           return "0px 3px 1px -2px rgba(0, 0, 0, 0.2)," + 
-                  "0px 2px 2px 0px rgba(0 , 0, 0, 0.14)," +
+                  "0px 2px 2px 0px rgba(0, 0, 0, 0.14)," +
                   "0px 1px 5px 0px rgba(0, 0, 0, 0.12)," +
                   "0px 5px 10px 3px rgba(0, 0, 0, 0.16)"
         return "none";
@@ -105,7 +110,13 @@ const useStyles = createUseStyles(theme => ({
         if (props.variant === "contained") return "rgba(0, 0, 0, 0.12)";
         return "none";
       },
-      border: props => props.variant === "outlined" ? "1px solid rgba(0, 0, 0, 0.12)" : "none",
+      border: props => {
+        if (props.variant === "outlined")
+          return "1px solid rgba(0, 0, 0, 0.12)";
+        if (props.variant === "dashed")
+          return "1px dashed rgba(0, 0, 0, 0.32)";
+        return "none";
+      },
       boxShadow: "none",
       cursor: "default",
     }
@@ -207,21 +218,24 @@ const CCButton = (props) => {
 };
 
 CCButton.propTypes = {
-  color: PropTypes.string,
-  variant: PropTypes.oneOf(["outlined", "contained", "text"]),
+  color: PropTypes.oneOfType([
+    PropTypes.oneOf(["primary", "secondary", "error", "warning", "sub", "icon"]),
+    PropTypes.string
+  ]),
+  variant: PropTypes.oneOf(["text", "outlined", "contained", "dashed"]),
   round: PropTypes.number,
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
   disableRipple: PropTypes.bool,
-  startIcon: PropTypes.object,
-  endIcon: PropTypes.object,
+  startIcon: PropTypes.element,
+  endIcon: PropTypes.element,
 };
 
 CCButton.defaultProps = {
   color: "primary",
   variant: "text",
-  round: 2,
+  round: 3,
   disabled: false,
   selected: false,
   size: "medium",

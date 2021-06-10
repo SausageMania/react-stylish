@@ -13,6 +13,10 @@ const theme = {
             main: "#f50057",
             dark: "#AB003C"
           },
+          warning:{
+            main: "#FA8E00",
+            dark: "#C75B00",
+          },
           selected: {
             dark: "#2c89b2",
             main: "#40c4ff",
