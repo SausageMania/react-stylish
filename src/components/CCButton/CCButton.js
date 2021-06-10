@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 
@@ -175,7 +175,7 @@ const useStyles = createUseStyles(theme => ({
   }
 }));
 
-const CCButton = (props) => {
+const CCButton = forwardRef((props, ref) => {
   const classes = useStyles(props);
   const {children, onMouseDown, startIcon, endIcon, fullWidth, disableRipple, ...others} = props;
 
@@ -203,6 +203,7 @@ const CCButton = (props) => {
       className={classes.button} 
       onMouseDown={onMouseDownHandle}
       onAnimationEnd={()=>setIsRippling(false)}
+      ref={ref}
       {...others}
     >
       {isRippling && (
@@ -216,7 +217,7 @@ const CCButton = (props) => {
       </span>
     </button>
     );
-};
+});
 
 CCButton.propTypes = {
   color: PropTypes.oneOfType([
