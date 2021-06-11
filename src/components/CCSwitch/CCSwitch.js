@@ -80,8 +80,13 @@ const useStyles = createUseStyles(theme => ({
 
 const CCSwitch = forwardRef((props, ref) => {
   const classes = useStyles(props);
-  const {checked, disabled, ...others} = props;
+  const {onChange, checked, disabled, ...others} = props;
   const [check, setCheck] = useState(checked ? checked : false);
+
+  const onChangeHandle = (e) => {
+    setCheck(!check)
+    onChange && onChange(e);
+  }
 
   return (
     <label className={clsx(classes.label__switch,{[classes.label__check]:check})} {...others}>
@@ -89,7 +94,7 @@ const CCSwitch = forwardRef((props, ref) => {
         type="checkbox" 
         className={classes.label__input} 
         checked={check} 
-        onChange={()=>setCheck(!check)}
+        onChange={onChangeHandle}
         disabled={disabled}
         ref={ref} 
       />
