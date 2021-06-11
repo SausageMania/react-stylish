@@ -47,13 +47,13 @@ const App = () => {
         <CCButton variant="text" color="error" onClick={resetHandle}>Reset</CCButton>
         </div>
         <div>
-          <CCButton variant="contained" color="sub" selected={select} onClick={selectHandle}>
+          <CCButton variant="dashed" color="sub" selected={select} onClick={selectHandle}>
             {select ? "ON" : "OFF"}
           </CCButton>
         </div>
       </div>
       <div className={classes.text}>
-        {text.content && <p>{text.content} {text.count} times!</p>}
+        {text.content && <p>{text.content} {text.count} {text.count === 1 ? "time" : "times"}!</p>}
       </div>
     </ThemeProvider>
   );

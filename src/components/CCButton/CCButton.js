@@ -99,6 +99,15 @@ const useStyles = createUseStyles(theme => ({
                   "0px 5px 10px 3px rgba(0, 0, 0, 0.16)"
         return "none";
       },
+      background: props => {
+        if (props.selected) return `${theme.palette.selected.main}`
+        if (theme.palette?.[props.color]) {
+          if (props.variant === "contained")
+            return `${theme.palette?.[props.color].dark}E0`;
+          return `${theme.palette?.[props.color].dark}28`;
+        }
+        return props.color ? "none" : `${theme.palette.primary.dark}28`;
+      }
     },
     "&:disabled": {
       color: props => {
@@ -192,12 +201,10 @@ const CCButton = forwardRef((props, ref) => {
   const [isRippling, setIsRippling] = useState(false);
 
   useEffect(()=>{
-    if(coords.x !== -1 && coords.y !== -1){
-      setIsRippling(true);
-    }else setIsRippling(false);
+    setIsRippling(true);
   },[coords]);
 
-  // onClick event 발생시 ripple 활성화
+  // onMouseDown event 발생시 ripple 활성화
   const onMouseDownHandle = (e) => {
     if (!disableRipple){
       const rect = e.currentTarget.getBoundingClientRect();
