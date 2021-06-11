@@ -7,7 +7,7 @@ const useStyles = createUseStyles(theme => ({
   label__input: {
     display: "none",
     "&:checked":{
-      "& ~ $label__marble": {
+      "& ~ $switch__marble": {
         left: props => props.size === "small" ? "27px" : "33px",
         boxShadow: props => props.disabled ? "none" : "-2px 0px 10px 1px rgba(0, 0, 0, 0.32)"
       },
@@ -53,7 +53,7 @@ const useStyles = createUseStyles(theme => ({
       return theme.palette.sub.main;
     },
   },
-  label__marble: {
+  switch__marble: {
     position: "absolute",
     top: "1px",
     left: "1px",
@@ -65,14 +65,14 @@ const useStyles = createUseStyles(theme => ({
     boxShadow: props => props.disabled ? "none" : "2px 0px 10px 1px rgba(0, 0, 0, 0.32)",
   },
   switch__on: {
-    paddingLeft: props => props.size === "small" ? "6px" : "10px",
+    paddingLeft: props => props.size === "small" ? "8px" : "10px",
     lineHeight: props => props.size === "small" ? "21px" : "25px",
     userSelect: "none",
     opacity: 0,
   },
   switch__off: {
     lineHeight: props => props.size === "small" ? "21px" : "25px",
-    paddingLeft: props => props.size === "small" ? "2px" : "4px",
+    paddingLeft: "4px",
     userSelect: "none",
     opacity: 1,
   }
@@ -96,7 +96,7 @@ const CCSwitch = forwardRef((props, ref) => {
         onChange={()=>setCheck(!check)}
         disabled={disabled}
       />
-      <span className={classes.label__marble}></span>
+      <span className={classes.switch__marble}></span>
       <span className={classes.switch__on}>on</span>
       <span className={classes.switch__off}>off</span>
     </label>
