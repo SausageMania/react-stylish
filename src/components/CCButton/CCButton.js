@@ -147,11 +147,10 @@ const useStyles = createUseStyles(theme => ({
   },
 
   content:{
-    position: "relative",
-    zIndex: "2",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   startIcon: {
     display: "flex",
@@ -177,7 +176,17 @@ const useStyles = createUseStyles(theme => ({
 
 const CCButton = forwardRef((props, ref) => {
   const classes = useStyles(props);
-  const {children, onMouseDown, startIcon, endIcon, fullWidth, disableRipple, ...others} = props;
+  const {
+    children, 
+    onMouseDown, 
+    onMouseUp, 
+    onClick, 
+    startIcon, 
+    endIcon, 
+    fullWidth, 
+    disableRipple, 
+    ...others
+  } = props;
 
   const [coords, setCoords] = useState({x: -1, y: -1});
   const [isRippling, setIsRippling] = useState(false);
@@ -188,7 +197,7 @@ const CCButton = forwardRef((props, ref) => {
     }else setIsRippling(false);
   },[coords]);
 
-  // mouseDown event 발생시 ripple 활성화
+  // onClick event 발생시 ripple 활성화
   const onMouseDownHandle = (e) => {
     if (!disableRipple){
       const rect = e.currentTarget.getBoundingClientRect();
@@ -198,18 +207,23 @@ const CCButton = forwardRef((props, ref) => {
     onMouseDown && onMouseDown();
   }
 
+  const onMouseUpHandle = (e) => {
+    onMouseUp && onMouseUp();
+    onClick && onClick();
+  }
+
   return (
     <button 
       className={classes.button} 
       onMouseDown={onMouseDownHandle}
+      onMouseUp={onMouseUpHandle}
       onAnimationEnd={()=>setIsRippling(false)}
       ref={ref}
       {...others}
     >
       {isRippling && (
-        <span className={classes.ripple} style={{left: coords.x, top: coords.y}} />
+        <span className={classes.ripple} style={{left: coords.x, top: coords.y}}/>
       )}
-      
       <span className={classes.content}>
         {startIcon && <span className={classes.startIcon}>{startIcon}</span>}
         {children}

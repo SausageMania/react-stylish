@@ -23,6 +23,7 @@ const App = () => {
     content: null,
     count: 0,
   });
+  const [select, setSelect] = useState(false);
 
   const onClickHandle = () => {
     setText({content:'You clicked', count: text.count + 1});
@@ -32,14 +33,23 @@ const App = () => {
     setText({content: null, count: 0});
   }
 
+  const selectHandle = () => {
+    setSelect(!select);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
           <CCButton variant="contained" onClick={onClickHandle}>Button</CCButton>
         </div>
+        <div className={classes.buttonContainer}>
+        <CCButton variant="text" color="error" onClick={resetHandle}>Reset</CCButton>
+        </div>
         <div>
-        <CCButton variant="contained" color="error" onClick={resetHandle}>Reset</CCButton>
+          <CCButton variant="contained" color="sub" selected={select} onClick={selectHandle}>
+            {select ? "ON" : "OFF"}
+          </CCButton>
         </div>
       </div>
       <div className={classes.text}>
