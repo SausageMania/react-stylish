@@ -99,15 +99,16 @@ const useStyles = createUseStyles(theme => ({
                   "0px 5px 10px 3px rgba(0, 0, 0, 0.16)"
         return "none";
       },
-      background: props => {
-        if (props.selected) return `${theme.palette.selected.main}`
-        if (theme.palette?.[props.color]) {
-          if (props.variant === "contained")
-            return `${theme.palette?.[props.color].dark}E0`;
-          return `${theme.palette?.[props.color].dark}28`;
-        }
-        return props.color ? "none" : `${theme.palette.primary.dark}28`;
-      }
+      // 코드가 일관적이기 않다고 판단하여 주석처리함. (추후 사용가능)
+      // background: props => {
+      //   if (props.selected) return `${theme.palette.selected.main}`
+      //   if (theme.palette?.[props.color]) {
+      //     if (props.variant === "contained")
+      //       return `${theme.palette?.[props.color].dark}E0`;
+      //     return `${theme.palette?.[props.color].dark}28`;
+      //   }
+      //   return props.color ? "none" : `${theme.palette.primary.dark}28`;
+      // }
     },
     "&:disabled": {
       color: props => {
