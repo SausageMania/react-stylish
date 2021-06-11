@@ -202,7 +202,8 @@ const CCButton = forwardRef((props, ref) => {
   const [isRippling, setIsRippling] = useState(false);
 
   useEffect(()=>{
-    setIsRippling(true);
+    if(coords.x !== -1 || coords.y !== -1)
+      setIsRippling(true);
   },[coords]);
 
   // onMouseDown event 발생시 ripple 활성화
