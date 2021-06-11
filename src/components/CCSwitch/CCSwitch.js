@@ -84,17 +84,14 @@ const CCSwitch = forwardRef((props, ref) => {
   const [check, setCheck] = useState(checked ? checked : false);
 
   return (
-    <label 
-      className={clsx(classes.label__switch,{[classes.label__check]:check})} 
-      ref={ref} 
-      {...others}
-    >
+    <label className={clsx(classes.label__switch,{[classes.label__check]:check})} {...others}>
       <input 
         type="checkbox" 
         className={classes.label__input} 
         checked={check} 
         onChange={()=>setCheck(!check)}
         disabled={disabled}
+        ref={ref} 
       />
       <span className={classes.switch__marble}></span>
       <span className={classes.switch__on}>on</span>
