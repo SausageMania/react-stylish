@@ -54,7 +54,7 @@ const useStyles = createUseStyles(theme => ({
       }
       return "4px";
     },
-    letterSpacing: "0,02857rem",
+    letterSpacing: "0.02857rem",
     fontWeight: "500",
     padding: props => {
       if(props.size === "small") {
