@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions";
-import { CCButton } from '../components/CCButton';
+import { CCButton } from '../components';
 import { Search } from '@material-ui/icons';
 import React from 'react';
 

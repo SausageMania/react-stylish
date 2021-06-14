@@ -68,6 +68,7 @@ const useStyles = createUseStyles(theme => ({
     },
     lineHeight: "1.75",
     cursor: "pointer",
+    userSelect: "none",
     transition: "background-color 250ms",
     overflow: "hidden",
     position: "relative",

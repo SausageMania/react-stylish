@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import { ThemeProvider, createUseStyles} from 'react-jss';
 import theme from './styles/theme';
-import { CCButton } from './components/CCButton';
-import { CCSwitch } from './components/CCSwitch'; 
+import { CCButton, CCSwitch } from './components';
 
 const styles = createUseStyles({
   container: {

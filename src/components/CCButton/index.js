@@ -1,1 +1,1 @@
-export { default as CCButton } from './CCButton';
+export { default } from './CCButton';

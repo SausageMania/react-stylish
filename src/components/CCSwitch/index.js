@@ -1,1 +1,1 @@
-export { default as CCSwitch } from './CCSwitch';
+export { default } from './CCSwitch';

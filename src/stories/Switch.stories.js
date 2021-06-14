@@ -1,4 +1,4 @@
-import { CCSwitch } from '../components/CCSwitch';
+import { CCSwitch } from '../components';
 import React from 'react';
 
 export default {
