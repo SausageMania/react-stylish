@@ -76,10 +76,10 @@ const App = () => {
         {text.content && <p>{text.content} {text.count} {text.count === 1 ? "time" : "times"}!</p>}
       </div>
       <div className={classes.switchContainer}>
-        Normal size :&nbsp;<CCSwitch color={["primary", "error"]}/>
+        Normal size :&nbsp;<CCSwitch colors={["secondary", "error"]}/>
       </div>
       <div className={classes.switchContainer}>
-        Small Size :&nbsp;<CCSwitch size="small"/>
+        Small Size :&nbsp;<CCSwitch size="small" onChange={e => console.log(e.target.checked)}/>
       </div>
     </ThemeProvider>
   );

@@ -22,7 +22,7 @@ const useStyles = createUseStyles(theme => ({
     },
     background: props => {
       if (props.selected) return theme.palette.selected.main;
-      if(props.variant === "contained"){
+      if (props.variant === "contained"){
         if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
         return props.color ? props.color : theme.palette.primary.main;
       }
@@ -200,6 +200,7 @@ const CCButton = forwardRef((props, ref) => {
 
   const [coords, setCoords] = useState({x: -1, y: -1});
   const [isRippling, setIsRippling] = useState(false);
+  const [isClick, setIsClick] = useState(false);
 
   useEffect(()=>{
     if(coords.x !== -1 || coords.y !== -1)
@@ -213,12 +214,14 @@ const CCButton = forwardRef((props, ref) => {
       setIsRippling(false);
       setCoords({x: e.clientX - rect.left, y: e.clientY - rect.top});
     }
+    setIsClick(true);
     onMouseDown && onMouseDown();
   }
 
   const onMouseUpHandle = (e) => {
     onMouseUp && onMouseUp();
-    onClick && onClick();
+    if(isClick) {onClick && onClick();}
+    setIsClick(false);
   }
 
   return (

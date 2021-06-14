@@ -37,7 +37,7 @@ const useStyles = createUseStyles(theme => ({
     color: "#FFFFFF",
     fontWeight: "bold",
     cursor: props => props.disabled ? "default" : "pointer",
-    transition: "all ease-in-out 0.3s",
+    transition: "all ease-in-out 0.25s",
     "& > *": {
       transition: "inherit",
       fontSize: props => props.size === "small" ? "12px" : "14px",
@@ -72,7 +72,7 @@ const useStyles = createUseStyles(theme => ({
   },
   switch__off: {
     lineHeight: props => props.size === "small" ? "21px" : "25px",
-    paddingLeft: "4px",
+    paddingLeft: props => props.size === "small" ? "2px" : "4px",
     userSelect: "none",
     opacity: 1,
   }
