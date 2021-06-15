@@ -6,6 +6,6 @@ export default {
     component: CCTextField,
   }
   
-export const TextField = () => ( <CCTextField label="차트번호" /> )
+export const TextField = () => ( <CCTextField label="차트번호" color="secondary"/> )
 
 TextField.storyName = "single.textfield";

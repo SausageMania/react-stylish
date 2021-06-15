@@ -27,11 +27,18 @@ const useStyles = createUseStyles(theme=> ({
   },
   span__focus: {
     transition: "color ease-in-out 0.25s",
-    color: theme.palette.primary.main,
+    color: props => {
+      if(theme.palette?.[props.color]) return theme.palette?.[props.color].main;
+      return props.color ? props.color : theme.palette.primary.main
+    },
   },
 
   input__field: {
-    width: props => props.fullWidth ? "calc(100% - 16px)" : "none",
+    width: props => {
+      if(props.fullWidth) return "calc(100% - 16px)";
+      if(props.width) return `${parseInt(props.width) - 16}px`;
+      return "none";
+    },
     height: props => {
       return props.height ? parseInt(props.height) : "20px";
     },
@@ -48,8 +55,16 @@ const useStyles = createUseStyles(theme=> ({
     backgroundColor : props => props.disabled ? theme.palette.inactive.rgba : "none",
     transition: "all ease-in-out 0.25s",
     "&:focus": {
-      border: `1px solid ${theme.palette.primary.main}`,
-      boxShadow: `0 0 1px 1px ${theme.palette.primary.main}`,
+      border: props => {
+        if(theme.palette?.[props.color]) return `1px solid ${theme.palette?.[props.color].main}`;
+        return props.color ? `1px solid ${props.color}` : `1px solid ${theme.palette.primary.main}`;
+      },
+      boxShadow: props => {
+        if(theme.palette?.[props.color]) return `0 0 1px 1px ${theme.palette?.[props.color].main}`;
+        return props.color 
+          ? `0 0 1px 1px ${props.color}`
+          : `0 0 1px 1px ${theme.palette.primary.main}`;
+      },
     },
   },
 }));
@@ -81,6 +96,8 @@ const CCTextField = forwardRef((props, ref) => {
       <label className={clsx(classes.label,{ [classes.label__focus]:isFocus || hasValue })}>
         <span className={clsx({[classes.span__focus]:isFocus })}>{label}</span>
       </label>
+      <div>
+      <span style={{position: "absolute"}}>123</span>
       <input 
         type="text"
         className={classes.input__field}
@@ -91,6 +108,7 @@ const CCTextField = forwardRef((props, ref) => {
         {...others} 
         ref={ref}
       />
+      </div>
     </>
   )
 })
