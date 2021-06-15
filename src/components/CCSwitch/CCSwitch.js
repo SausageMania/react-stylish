@@ -21,6 +21,7 @@ const useStyles = createUseStyles(theme => ({
   },
   label__switch: {
     overflow: "hidden",
+    userSelect: "none",
     position: "relative",
     display: "inline-block",
     width: props => props.size === "small" ? "46px" : "58px",
@@ -67,13 +68,11 @@ const useStyles = createUseStyles(theme => ({
   switch__on: {
     paddingLeft: props => props.size === "small" ? "8px" : "10px",
     lineHeight: props => props.size === "small" ? "21px" : "25px",
-    userSelect: "none",
     opacity: 0,
   },
   switch__off: {
-    lineHeight: props => props.size === "small" ? "21px" : "25px",
     paddingLeft: props => props.size === "small" ? "2px" : "4px",
-    userSelect: "none",
+    lineHeight: props => props.size === "small" ? "21px" : "25px",
     opacity: 1,
   }
 }));

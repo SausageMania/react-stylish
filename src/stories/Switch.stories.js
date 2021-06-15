@@ -6,10 +6,6 @@ export default {
   component: CCSwitch,
 }
 
-export const Switch = ({...options}) => (
-  <div>
-    <CCSwitch {...options}/>
-  </div>
-)
+export const Switch = ({...options}) => ( <CCSwitch {...options}/> )
 
 Switch.storyName = "single.switch";

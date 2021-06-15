@@ -100,7 +100,7 @@ const useStyles = createUseStyles(theme => ({
                   "0px 5px 10px 3px rgba(0, 0, 0, 0.16)"
         return "none";
       },
-      // 코드가 일관적이기 않다고 판단하여 주석처리함. (추후 사용가능)
+      // 코드가 일관적이지 않다고 판단하여 주석처리함. (추후 사용가능)
       // background: props => {
       //   if (props.selected) return `${theme.palette.selected.main}`
       //   if (theme.palette?.[props.color]) {
@@ -137,7 +137,7 @@ const useStyles = createUseStyles(theme => ({
     height: "5px",
     position: "absolute",
     background: props => {
-      if (props.variant === "contained") return "#FFFFFF";
+      if (props.variant === "contained" || props.selected) return "#FFFFFF";
       if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
       return props.color ? props.color : theme.palette.primary.main;
     },
@@ -221,7 +221,7 @@ const CCButton = forwardRef((props, ref) => {
 
   const onMouseUpHandle = (e) => {
     onMouseUp && onMouseUp();
-    if(isClick) {onClick && onClick();}
+    if(isClick) onClick && onClick();
     setIsClick(false);
   }
 
