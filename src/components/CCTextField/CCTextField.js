@@ -97,7 +97,7 @@ const CCTextField = forwardRef((props, ref) => {
         <span className={clsx({[classes.span__focus]:isFocus })}>{label}</span>
       </label>
       <div>
-      <span style={{position: "absolute"}}>123</span>
+      
       <input 
         type="text"
         className={classes.input__field}
