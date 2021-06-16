@@ -221,14 +221,26 @@ const CCButton = forwardRef((props, ref) => {
 
   const onMouseUpHandle = (e) => {
     onMouseUp && onMouseUp();
-    if(isClick) onClick && onClick();
+    if(isClick) onClick && onClick(e);
     setIsClick(false);
+  }
+
+  const onKeyDownHandle = (e) => {
+    if(e.key === "Enter" || e.key === " "){
+      if (!disableRipple){
+        const rect = e.currentTarget.getBoundingClientRect();
+        setIsRippling(false);
+        setCoords({x: rect.width / 2, y: rect.height / 2});
+      }
+      onClick && onClick(e);
+    }
   }
 
   return (
     <button 
       className={classes.button} 
       onMouseDown={onMouseDownHandle}
+      onKeyDown={onKeyDownHandle}
       onMouseUp={onMouseUpHandle}
       onAnimationEnd={()=>setIsRippling(false)}
       ref={ref}

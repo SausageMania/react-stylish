@@ -80,6 +80,7 @@ const App = () => {
       <div className={classes.switchContainer}>
         Small Size :&nbsp;<CCSwitch size="small" onChange={e => console.log(e.target.checked)}/>
       </div>
+      <br/>
       <CCTextField defaultValue="test" label="차트번호"/>
     </ThemeProvider>
   );

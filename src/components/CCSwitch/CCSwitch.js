@@ -88,7 +88,7 @@ const CCSwitch = forwardRef((props, ref) => {
   }
 
   return (
-    <label className={clsx(classes.label__switch,{[classes.label__check]:check})} {...others}>
+    <label className={clsx(classes.label__switch,{[classes.label__check]:check})} tabIndex="0" {...others}>
       <input 
         type="checkbox" 
         className={classes.label__input} 

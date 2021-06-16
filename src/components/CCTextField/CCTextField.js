@@ -6,14 +6,13 @@ const useStyles = createUseStyles(theme=> ({
   textfield__container: {
     position: "relative",
     display: "flex",
-    overflow: "visible",
   },
   label: {
     position: "absolute",
     fontSize: "16px",
     top: props => {
-      if(props.height) return `${(parseInt(props.height) / 2 + 6)}px`
-      return "16px";
+      if(props.height) return `${(parseInt(props.height) / 2 + 8)}px`
+      return "18px";
     },
     left: "13px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "rgba(0, 0, 0, 0.50)",
@@ -105,7 +104,7 @@ const CCTextField = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(props.defaultValue));
 
-  const inputRef = useRef();
+  const inputRef = useRef(null);
 
   const onFocusHandle = (e) => {
     setIsFocus(true);
@@ -126,25 +125,26 @@ const CCTextField = forwardRef((props, ref) => {
   return (
     <div className={classes.textfield__container}>
       <label className={clsx(classes.label,{ [classes.label__focus]:isFocus || hasValue || Boolean(startIcon)})}>
-        <span className={clsx({[classes.span__focus]:isFocus })}>{label}</span>
+        <span className={clsx({[classes.span__focus]:isFocus})}>{label}</span>
       </label>
       <div 
         className={clsx(classes.input__container, {[classes.input__focus]:isFocus})} 
-        onFocus={onFocusHandle}
+        
         tabIndex="-1"
         ref={ref}
       >
-        {startIcon && <span className={classes.icon} onClick={onBlurHandle}>{startIcon}</span>}
+        {startIcon && <span className={classes.icon}>{startIcon}</span>}
         <input 
           type="text"
           className={classes.input__field}
+          onFocus={onFocusHandle}
           onBlur={onBlurHandle}
           onChange={onChangeHandle}
           placeholder={isFocus || hasValue ? placeholder : ""}
           {...others} 
           ref={inputRef}
         />
-        {endIcon && <span className={classes.icon} onClick={onBlurHandle}>{endIcon}</span>}
+        {endIcon && <span className={classes.icon}>{endIcon}</span>}
       </div>
     </div>
   )
