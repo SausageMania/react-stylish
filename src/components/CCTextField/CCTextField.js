@@ -1,8 +1,11 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme=> ({
+  textfield__container: {
+    display: "flex"
+  },
   label: {
     position: "absolute",
     fontSize: "16px",
@@ -32,7 +35,25 @@ const useStyles = createUseStyles(theme=> ({
       return props.color ? props.color : theme.palette.primary.main
     },
   },
-
+  input__container: {
+    display: "flex",
+    alignItems: "center",
+    border: "1px solid",
+    borderRadius: "3px",
+    transition: "box-shadow ease-in-out 0.25s"
+  },
+  input__focus: {
+    border: props => {
+      if(theme.palette?.[props.color]) return `1px solid ${theme.palette?.[props.color].main}`;
+      return props.color ? `1px solid ${props.color}` : `1px solid ${theme.palette.primary.main}`;
+    },
+    boxShadow: props => {
+      if(theme.palette?.[props.color]) return `0 0 1px 1px ${theme.palette?.[props.color].main}`;
+      return props.color 
+        ? `0 0 1px 1px ${props.color}`
+        : `0 0 1px 1px ${theme.palette.primary.main}`;
+    },
+  },
   input__field: {
     width: props => {
       if(props.fullWidth) return "calc(100% - 16px)";
@@ -45,39 +66,29 @@ const useStyles = createUseStyles(theme=> ({
     padding: "14px 10px",
     fontSize: "16px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
-    userSelect: props => props.diabled ? "none" : "default",
-    outline: "none",
-    border: props => {
-      if(props.disabled) return "none";
-      return "1px solid rgba(0, 0, 0, 0.78)";
-    },
-    borderRadius: "3px",
+    userSelect: props => props.disabled ? "none" : "default",
     backgroundColor : props => props.disabled ? theme.palette.inactive.rgba : "none",
     transition: "all ease-in-out 0.25s",
-    "&:focus": {
-      border: props => {
-        if(theme.palette?.[props.color]) return `1px solid ${theme.palette?.[props.color].main}`;
-        return props.color ? `1px solid ${props.color}` : `1px solid ${theme.palette.primary.main}`;
-      },
-      boxShadow: props => {
-        if(theme.palette?.[props.color]) return `0 0 1px 1px ${theme.palette?.[props.color].main}`;
-        return props.color 
-          ? `0 0 1px 1px ${props.color}`
-          : `0 0 1px 1px ${theme.palette.primary.main}`;
-      },
-    },
+    border: "none",
+    outline: "none",
+  },
+  icon: {
+    padding: "5px",
   },
 }));
 
 const CCTextField = forwardRef((props, ref) => {
   const classes = useStyles(props);
-  const {label, placeholder, onFocus, onBlur, onChange, ...others } = props;
+  const {label, startIcon, endIcon, placeholder, onFocus, onBlur, onChange, ...others } = props;
 
   const [isFocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(props.defaultValue));
 
+  const inputRef = useRef();
+
   const onFocusHandle = (e) => {
     setIsFocus(true);
+    inputRef.current.focus();
     onFocus && onFocus(e);
   }
   
@@ -91,25 +102,30 @@ const CCTextField = forwardRef((props, ref) => {
     onChange && onChange(e);
   }
 
+
   return (
-    <>
-      <label className={clsx(classes.label,{ [classes.label__focus]:isFocus || hasValue })}>
+    <div className={classes.textfield__container}>
+      <label className={clsx(classes.label,{ [classes.label__focus]:isFocus || hasValue || Boolean(startIcon)})}>
         <span className={clsx({[classes.span__focus]:isFocus })}>{label}</span>
       </label>
-      <div>
-      
-      <input 
-        type="text"
-        className={classes.input__field}
-        onFocus={onFocusHandle}
-        onBlur={onBlurHandle}
-        onChange={onChangeHandle}
-        placeholder={isFocus || hasValue ? placeholder : ""}
-        {...others} 
+      <div 
+        className={clsx(classes.input__container, {[classes.input__focus]:isFocus})} 
+        onClick={onFocusHandle} 
         ref={ref}
-      />
+      >
+        {startIcon && <span className={classes.icon}>{startIcon}</span>}
+        <input 
+          type="text"
+          className={classes.input__field}
+          onBlur={onBlurHandle}
+          onChange={onChangeHandle}
+          placeholder={isFocus || hasValue ? placeholder : ""}
+          {...others} 
+          ref={inputRef}
+        />
+        {endIcon && <span className={classes.icon}>{endIcon}</span>}
       </div>
-    </>
+    </div>
   )
 })
 
