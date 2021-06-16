@@ -4,18 +4,20 @@ import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme=> ({
   textfield__container: {
-    display: "flex"
+    position: "relative",
+    display: "flex",
+    overflow: "visible",
   },
   label: {
     position: "absolute",
     fontSize: "16px",
     top: props => {
-      if(props.height) return `${(parseInt(props.height) / 2 + 24)}px`
-      return "34px";
+      if(props.height) return `${(parseInt(props.height) / 2 + 6)}px`
+      return "16px";
     },
-    left: "29px",
+    left: "13px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "rgba(0, 0, 0, 0.50)",
-    transition: "all ease-in-out 0.25s",
+    transition: "all ease-in-out 0.2s",
     backgroundColor: "none",
     pointerEvents: "none",
   },
@@ -29,18 +31,30 @@ const useStyles = createUseStyles(theme=> ({
     padding: "0 3px"
   },
   span__focus: {
-    transition: "color ease-in-out 0.25s",
+    transition: "color ease-in-out 0.2s",
     color: props => {
       if(theme.palette?.[props.color]) return theme.palette?.[props.color].main;
       return props.color ? props.color : theme.palette.primary.main
     },
   },
   input__container: {
+    width: props => {
+      if(props.fullWidth) return "100%";
+      if(props.width) return `${props.width}px`;
+      return "none";
+    },
     display: "flex",
     alignItems: "center",
-    border: "1px solid",
-    borderRadius: "3px",
-    transition: "box-shadow ease-in-out 0.25s"
+    outline: "none",
+    border: "1px solid rgba(0, 0, 0, 0.78)",
+    borderRadius: props => {
+      if (props.round){
+        const round = (props.round - 1) * 2;
+        return `${round}px`;
+      }
+      return "4px";
+    },
+    transition: "box-shadow ease-in-out 0.2s",
   },
   input__focus: {
     border: props => {
@@ -70,6 +84,13 @@ const useStyles = createUseStyles(theme=> ({
     backgroundColor : props => props.disabled ? theme.palette.inactive.rgba : "none",
     transition: "all ease-in-out 0.25s",
     border: "none",
+    borderRadius: props => {
+      if (props.round){
+        const round = (props.round - 1) * 2;
+        return `${round}px`;
+      }
+      return "4px";
+    },
     outline: "none",
   },
   icon: {
@@ -79,7 +100,7 @@ const useStyles = createUseStyles(theme=> ({
 
 const CCTextField = forwardRef((props, ref) => {
   const classes = useStyles(props);
-  const {label, startIcon, endIcon, placeholder, onFocus, onBlur, onChange, ...others } = props;
+  const {label, fullWidth, startIcon, endIcon, placeholder, onFocus, onBlur, onChange, ...others } = props;
 
   const [isFocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(props.defaultValue));
@@ -102,7 +123,6 @@ const CCTextField = forwardRef((props, ref) => {
     onChange && onChange(e);
   }
 
-
   return (
     <div className={classes.textfield__container}>
       <label className={clsx(classes.label,{ [classes.label__focus]:isFocus || hasValue || Boolean(startIcon)})}>
@@ -110,10 +130,11 @@ const CCTextField = forwardRef((props, ref) => {
       </label>
       <div 
         className={clsx(classes.input__container, {[classes.input__focus]:isFocus})} 
-        onClick={onFocusHandle} 
+        onFocus={onFocusHandle}
+        tabIndex="-1"
         ref={ref}
       >
-        {startIcon && <span className={classes.icon}>{startIcon}</span>}
+        {startIcon && <span className={classes.icon} onClick={onBlurHandle}>{startIcon}</span>}
         <input 
           type="text"
           className={classes.input__field}
@@ -123,7 +144,7 @@ const CCTextField = forwardRef((props, ref) => {
           {...others} 
           ref={inputRef}
         />
-        {endIcon && <span className={classes.icon}>{endIcon}</span>}
+        {endIcon && <span className={classes.icon} onClick={onBlurHandle}>{endIcon}</span>}
       </div>
     </div>
   )

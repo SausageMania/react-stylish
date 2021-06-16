@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { ThemeProvider, createUseStyles} from 'react-jss';
 import theme from './styles/theme';
-import { CCButton, CCSwitch } from './components';
+import { CCButton, CCSwitch, CCTextField } from './components';
 
 const styles = createUseStyles({
   container: {
@@ -80,6 +80,7 @@ const App = () => {
       <div className={classes.switchContainer}>
         Small Size :&nbsp;<CCSwitch size="small" onChange={e => console.log(e.target.checked)}/>
       </div>
+      <CCTextField defaultValue="test" label="차트번호"/>
     </ThemeProvider>
   );
 }

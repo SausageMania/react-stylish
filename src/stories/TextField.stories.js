@@ -9,8 +9,9 @@ export default {
 export const TextField = () => ( 
   <CCTextField 
     label="차트번호" 
-    color="secondary" 
-    endIcon={<CCButton size="small">검색</CCButton>}
+    color="secondary"
+    defaultValue="129-125912-12012"
+    endIcon={<CCButton size="small" color="secondary">검색</CCButton>}
   /> 
 )
 
