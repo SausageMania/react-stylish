@@ -6,12 +6,15 @@ export default {
     component: CCTextField,
   }
   
-export const TextField = () => ( 
-  <CCTextField 
-    label="차트번호qwe" 
-    color="secondary" 
-    endIcon={<CCButton size="small" color="secondary">검색</CCButton>}
-  /> 
+export const TextField = ({...options}) => (
+  <div style={{padding: "5px"}}>
+    <CCTextField
+      error
+      endComponent={<CCButton size="small">검색</CCButton>}
+      helpComponent={<div>This is helper text</div>}
+      {...options}
+    /> 
+  </div>
 )
 
 TextField.storyName = "single.textfield";

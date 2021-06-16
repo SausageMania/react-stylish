@@ -10,6 +10,7 @@ const useStyles = createUseStyles(theme => ({
       // return "auto";
     },
     minWidth: props => {
+      if(props.disablePadding) return "none";
       if(props.size === "medium") return "64px";
       if(props.size === "small") return "48px";
       return "64px";
@@ -57,6 +58,7 @@ const useStyles = createUseStyles(theme => ({
     letterSpacing: "0.02857rem",
     fontWeight: "500",
     padding: props => {
+      if(props.disablePadding) return "0";
       if(props.size === "small") {
         if((props.variant === "outlined" || props.variant === "dashed") && !props.selected) 
           return "0.5px 7px";
@@ -195,7 +197,8 @@ const CCButton = forwardRef((props, ref) => {
     startIcon, 
     endIcon, 
     fullWidth, 
-    disableRipple, 
+    disableRipple,
+    disablePadding, 
     ...others
   } = props;
 
@@ -269,6 +272,7 @@ CCButton.propTypes = {
   selected: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
   disableRipple: PropTypes.bool,
+  disablePadding: PropTypes.bool,
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
 };
@@ -281,6 +285,7 @@ CCButton.defaultProps = {
   selected: false,
   size: "medium",
   disableRipple: false,
+  disablePadding: false,
 }
 
 export default CCButton;
