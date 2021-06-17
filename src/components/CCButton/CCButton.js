@@ -5,17 +5,22 @@ import PropTypes from 'prop-types';
 const useStyles = createUseStyles(theme => ({
   button: {
     width: props => {
-      if(props.fullWidth) return "100%"; 
+      if(props.fullWidth) return "100%";
+      if(props.square) return props.square; 
       if(props.width) return props.width;
       // return "auto";
     },
     minWidth: props => {
-      if(props.disablePadding) return "none";
+      if(props.disablePadding || props.square) return "none";
       if(props.size === "medium") return "64px";
       if(props.size === "small") return "48px";
       return "64px";
     },
-    height: props => props.height ? props.height : 'auto',
+    height: props => {
+      if(props.square) return props.square; 
+      if(props.height) return props.height;
+      return 'auto';
+    },
     color: props => {
       if (props.variant === "contained" || props.selected) return "#FFFFFF";
       if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
@@ -80,6 +85,7 @@ const useStyles = createUseStyles(theme => ({
         return "0px 3px 1px -2px rgba(0, 0, 0, 0.2)," + 
                 "0px 2px 2px 0px rgba(0, 0, 0, 0.14)," +
                 "0px 1px 5px 0px rgba(0, 0, 0, 0.12)"
+      return "none";
     },
     "&:hover": {
       background: props => {
@@ -164,6 +170,12 @@ const useStyles = createUseStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
+    "& > svg " : {
+      fontSize: props => {
+        if(props.size === "small") return "14px"
+        return "12px";
+      },
+    }
   },
   startIcon: {
     display: "flex",

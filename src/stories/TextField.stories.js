@@ -9,8 +9,9 @@ export default {
 export const TextField = ({...options}) => (
   <div style={{padding: "5px"}}>
     <CCTextField
+      startComponent={<span>$</span>}
       endComponent={<CCButton size="medium">검색</CCButton>}
-      helpComponent="This is a help component"
+      helpComponent={<span>Please insert the money cost.</span>}
       rows={1}
       {...options}
     /> 

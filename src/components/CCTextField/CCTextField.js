@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme=> ({
   /* 전체 textfield 스타일 */
-  container: {
+  root: {
     padding: props => {
       const top = props.label ? "18px" : "0px";
       const bottom = props.helpComponent ? "18px" : "0px";
@@ -205,6 +205,7 @@ const useStyles = createUseStyles(theme=> ({
       }
       return "4px";
     },
+    overflow: "auto",
     resize: props => {
       if(props.disableResize || props.disabled) return "none";
       if(props.fullWidth) return "vertical";
@@ -219,6 +220,7 @@ const useStyles = createUseStyles(theme=> ({
   },
   /* textfield가 focus상태가 아닐때의 스타일 */
   extra__not__focus: {
+    color: props => props.disabled ? theme.palette.disabled.rgba : "rgba(0, 0, 0, 0.50)",
     "& > *": {
       color: props => props.disabled ? theme.palette.disabled.rgba : "rgba(0, 0, 0, 0.50)",
     }
@@ -289,7 +291,7 @@ const CCTextField = forwardRef((props, ref) => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.root}>
       <div className={clsx(classes.textfield__container,{[classes.textfield__error]:errorAnimation})}>
         <label className={clsx(
             classes.label,
@@ -324,7 +326,7 @@ const CCTextField = forwardRef((props, ref) => {
               onFocus={onFocusHandle}
               onBlur={onBlurHandle}
               onChange={onChangeHandle}
-              placeholder={isFocus || labelFixed || !label ? placeholder : ""}
+              placeholder={isFocus || labelFixed || !label || startComponent ? placeholder : ""}
               disabled={disabled}
               {...others}
             />
@@ -334,7 +336,7 @@ const CCTextField = forwardRef((props, ref) => {
               onFocus={onFocusHandle}
               onBlur={onBlurHandle}
               onChange={onChangeHandle}
-              placeholder={isFocus || labelFixed || !label ? placeholder : ""}
+              placeholder={isFocus || labelFixed || !label || startComponent ? placeholder : ""}
               disabled={disabled}
               {...others} 
             />
