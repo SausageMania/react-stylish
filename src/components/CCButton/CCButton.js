@@ -172,8 +172,8 @@ const useStyles = createUseStyles(theme => ({
     position: "relative",
     "& > svg " : {
       fontSize: props => {
-        if(props.size === "small") return "14px"
-        return "12px";
+        if(props.size === "small") return "12px"
+        return "14px";
       },
     }
   },

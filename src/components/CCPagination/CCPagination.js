@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
+import { ArrowBackIos, ArrowForwardIos, FirstPage, LastPage } from '@material-ui/icons';
 import { CCButton } from '../../components';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 const useStyles = createUseStyles(theme=>({
   pagination: {
     paddingInlineStart: 0,
+    display: "flex",
     "& > li": {
       display: "inline-block",
       margin: "0 3px",
@@ -34,9 +35,24 @@ const CCPagination = forwardRef((props, ref) => {
     setPageClick(pageClick + 1);
   }
 
+  const firstClickHandle = e => {
+    onChange && onChange(e, 1);
+    setPageClick(1);
+  }
+
+  const lastClickHandle = e => {
+    onChange && onChange(e, count);
+    setPageClick(count);
+  }
+
   return (
     <nav>
       <ul className={classes.pagination} ref={ref}>
+        <li>
+          <CCButton onClick={firstClickHandle} {...others}>
+            <FirstPage />
+          </CCButton>
+        </li>
         <li>
           <CCButton onClick={prevClickHandle} {...others} disabled={pageClick === 1}>
             <ArrowBackIos />
@@ -55,7 +71,12 @@ const CCPagination = forwardRef((props, ref) => {
         ))}
         <li>
           <CCButton onClick={nextClickHandle} {...others} disabled={pageClick === count}>
-            <ArrowForwardIos fontSize="small" />
+            <ArrowForwardIos/>
+          </CCButton>
+        </li>
+        <li>
+          <CCButton onClick={lastClickHandle} {...others}>
+            <LastPage />
           </CCButton>
         </li>
       </ul>
