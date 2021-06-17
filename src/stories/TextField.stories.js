@@ -11,7 +11,7 @@ export const TextField = ({...options}) => (
     <CCTextField
       error
       endComponent={<CCButton size="small">검색</CCButton>}
-      helpComponent={<div>This is helper text</div>}
+      helpComponent="This is help component"
       {...options}
     /> 
   </div>
