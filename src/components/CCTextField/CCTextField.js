@@ -16,6 +16,9 @@ const useStyles = createUseStyles(theme=> ({
   textfield__container: {
     position: "relative",
     display: "flex",
+    width: props => {
+      if(props.fullWidth) return "100%";
+    },
   },
   /* errorAnimation이 true일 경우 나타날 animation 스타일 */
   textfield__error: {
@@ -141,8 +144,8 @@ const useStyles = createUseStyles(theme=> ({
   /* input 태그의 스타일 (startComponent와 endComponent는 해당되지 않음.) */
   input__field: {
     width: props => {
-      if(props.fullWidth) return "calc(100% - 16px)";
-      if(props.width) return `${parseInt(props.width) - 20}px`;
+      if(props.fullWidth) return "calc(100% - 20px)";
+      if(props.width) return `${parseInt(props.width) - 13}px`;
       if(props.size === "small") return "120px";
       return "none";
     },
@@ -176,8 +179,8 @@ const useStyles = createUseStyles(theme=> ({
   },
   textarea__field: {
     width: props => {
-      if(props.fullWidth) return "calc(100% - 16px)";
-      if(props.width) return `${parseInt(props.width) - 20}px`;
+      if(props.fullWidth) return "calc(100% - 20px)";
+      if(props.width) return `${parseInt(props.width) - 13}px`;
       if(props.size === "small") return "120px";
     },
     height: props => {
@@ -327,13 +330,13 @@ const CCTextField = forwardRef((props, ref) => {
             />
           ) : (
             <input 
-            className={classes.input__field}
-            onFocus={onFocusHandle}
-            onBlur={onBlurHandle}
-            onChange={onChangeHandle}
-            placeholder={isFocus || labelFixed || !label ? placeholder : ""}
-            disabled={disabled}
-            {...others} 
+              className={classes.input__field}
+              onFocus={onFocusHandle}
+              onBlur={onBlurHandle}
+              onChange={onChangeHandle}
+              placeholder={isFocus || labelFixed || !label ? placeholder : ""}
+              disabled={disabled}
+              {...others} 
             />
           )}
           

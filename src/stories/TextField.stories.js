@@ -9,10 +9,9 @@ export default {
 export const TextField = ({...options}) => (
   <div style={{padding: "5px"}}>
     <CCTextField
-      error
-      endComponent={<CCButton size="small">검색</CCButton>}
-      helpComponent="This is help component"
-      rows={5}
+      endComponent={<CCButton size="medium">검색</CCButton>}
+      helpComponent="This is a help component"
+      rows={1}
       {...options}
     /> 
   </div>
