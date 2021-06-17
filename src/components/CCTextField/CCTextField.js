@@ -1,15 +1,25 @@
-import React, { forwardRef, useState, useRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme=> ({
+  /* 전체 textfield 스타일 */
+  container: {
+    padding: props => {
+      const top = props.label ? "18px" : "0px";
+      const bottom = props.helpComponent ? "18px" : "0px";
+      return `${top} 0 ${bottom} 0`
+    },
+  },
+  /* startComponent와 endComponent를 포함한 input의 기본 스타일 */
   textfield__container: {
     position: "relative",
     display: "flex",
   },
+  /* errorAnimation이 true일 경우 나타날 animation 스타일 */
   textfield__error: {
-    animation: "0.5s ease 1 forwards $error-animation"
+    animation: "0.5s ease 1 forwards $error-animation",
   },
   "@keyframes error-animation": {
     "12.5%": {
@@ -28,12 +38,13 @@ const useStyles = createUseStyles(theme=> ({
       transform: "translate(-10px, 0)",
     },
     "75%": {
-      transform: "translate(5px, 0)",
+      transform: "translate(10px, 0)",
     },
     "87.5%": {
       transform: "translate(-5px, 0)"
     }
   },
+  /* 기본 label 스타일 */
   label: {
     position: "absolute",
     fontSize: "16px",
@@ -52,6 +63,7 @@ const useStyles = createUseStyles(theme=> ({
     backgroundColor: "none",
     pointerEvents: "none",
   },
+  /* input이 focus일 경우 label의 위치를 변경할 스타일 */
   label__focus: {
     transform: props => {
       if(props.height) return `translate(-15px, -${props.height / 2 + 9}px)`;
@@ -61,6 +73,7 @@ const useStyles = createUseStyles(theme=> ({
     fontSize: "14px",
     padding: "0 3px",
   },
+  /* input이 focus일 경우 변경될 label의 font color 스타일 */
   span__focus: {
     transition: "color ease-in-out 0.25s",
     color: props => {
@@ -69,6 +82,7 @@ const useStyles = createUseStyles(theme=> ({
       return props.color ? props.color : theme.palette.primary.main
     },
   },
+  /* required가 true일 경우 나타날 *(별표)의 스타일 */
   required: {
     color: "red",
     paddingLeft: "2px",
@@ -101,20 +115,8 @@ const useStyles = createUseStyles(theme=> ({
       return "4px";
     },
     transition: "box-shadow ease-in-out 0.25s",
-    "&:hover":{
-      border: props => {
-        if(props.variant === "text") return "1px solid transparent";
-        if(props.error) return `1px solid ${theme.palette.error.main}`;
-        return "1px solid black";
-      },
-      borderBottom: props => {
-        if(props.variant === "text" && !props.disableLine){
-          if(props.error) return `1px solid ${theme.palette.error.main}`;
-          return "1px solid black";
-        }
-      },
-    }
   },
+  /* startComponent와 endComponent를 포함한 input이 focus될 때의 스타일 */
   input__focus: {
     border: props => {
       if(props.variant === "text") return "1px solid transparent";
@@ -136,6 +138,7 @@ const useStyles = createUseStyles(theme=> ({
     borderRadius: "4px",
     border: "1px solid transparent !important",
   },
+  /* input 태그의 스타일 (startComponent와 endComponent는 해당되지 않음.) */
   input__field: {
     width: props => {
       if(props.fullWidth) return "calc(100% - 16px)";
@@ -156,7 +159,7 @@ const useStyles = createUseStyles(theme=> ({
     fontSize: "16px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
     userSelect: props => props.disabled ? "none" : "default",
-    transition: "all ease-in-out 0.25s",
+    transition: props => props.multiline ? "none" : "all ease-in-out 0.25s",
     border: "none",
     borderRadius: props => {
       if (props.round){
@@ -165,13 +168,41 @@ const useStyles = createUseStyles(theme=> ({
       }
       return "4px";
     },
+    // resize: props => {
+    //   if(props.disableResize && props.multiline) return "none";
+    // },
     backgroundColor: "unset",
     outline: "none",
   },
+  textarea__field: {
+    padding: props => {
+      const left = props.startComponent ? "3px" : "10px";
+      const right = props.endComponent ? "3px" : "10px";
+      return `14px ${right} 14px ${left}`;
+    },
+    fontSize: "16px",
+    color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
+    userSelect: props => props.disabled ? "none" : "default",
+    border: "none",
+    borderRadius: props => {
+      if (props.round){
+        const round = (props.round - 1) * 2;
+        return `${round}px`;
+      }
+      return "4px";
+    },
+    resize: props => {
+      if(props.disableResize || props.disabled) return "none";
+    },
+    backgroundColor: "unset",
+    outline: "none",
+  },
+  /* startComponent와 endComponent 스타일 */
   extra: {
     padding: "5px",
     position: "relative",
   },
+  /* textfield가 focus상태가 아닐때의 스타일 */
   extra__not__focus: {
     "& > *": {
       color: props => props.disabled ? theme.palette.disabled.rgba : "rgba(0, 0, 0, 0.50)",
@@ -183,20 +214,18 @@ const useStyles = createUseStyles(theme=> ({
     height: "100%",
     zIndex: 1,
   },
-  helper__text: {
+  /* helpComponent의 스타일 */
+  help__component: {
     position: "absolute",
     opacity: 0,
-    top: props => {
-      if(props.height) return `${props.height - 6}px`;
-      if(props.size === "small") return "36px";
-      return "42px";
-    },
+    bottom: -10,
     left: 5,
     fontSize: "14px",
     color: props => props.error ? theme.palette.error.main : "rgba(0, 0, 0, 0.78)",
     transition: "all ease-in-out 0.25s"
   },
-  helper__text__focus: {
+  /* textfield가 focus상태일 때의 helpComponent 스타일 */
+  help__component__focus: {
     transform: "translate(0, 10px)",
     opacity: 1,
   }
@@ -210,12 +239,15 @@ const CCTextField = forwardRef((props, ref) => {
     helpFixed, 
     required,
     disabled, 
-    fullWidth, 
+    fullWidth,
+    multiline,
+    disableResize, 
     startComponent, 
     endComponent, 
     helpComponent,
     placeholder,
     disableLine,
+    defaultValue,
     error,
     errorAnimation, 
     onFocus, 
@@ -227,11 +259,8 @@ const CCTextField = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(props.defaultValue));
 
-  const inputRef = useRef(null);
-
   const onFocusHandle = (e) => {
     setIsFocus(true);
-    inputRef.current.focus();
     onFocus && onFocus(e);
   }
   
@@ -246,57 +275,72 @@ const CCTextField = forwardRef((props, ref) => {
   }
 
   return (
-    <div className={clsx(classes.textfield__container,{[classes.textfield__error]:error && errorAnimation})}>
-      <label className={clsx(
-          classes.label,
-          {[classes.label__focus]:isFocus || hasValue || Boolean(startComponent) || labelFixed}
-        )}
-      >
-        <span className={clsx({[classes.span__focus]:isFocus})}>
-          {label}
-          {required && <span className={classes.required}>*</span>}
-        </span>
-      </label>
-      <div 
-        className={clsx(
-          classes.input__container, 
-          {
-            [classes.input__focus]:isFocus, 
-            [classes.input__disabled]:disabled
-          }
-        )} 
-        tabIndex="-1"
-        ref={ref}
-      >
-        {startComponent && (
-          <span className={clsx(classes.extra, {[classes.extra__not__focus]:!isFocus})}>
-            {disabled && <div className={classes.extra__disabled} />}
-            {startComponent}
+    <div className={classes.container}>
+      <div className={clsx(classes.textfield__container,{[classes.textfield__error]:error && errorAnimation})}>
+        <label className={clsx(
+            classes.label,
+            {[classes.label__focus]:isFocus || hasValue || Boolean(startComponent) || labelFixed}
+          )}
+        >
+          <span className={clsx({[classes.span__focus]:isFocus})}>
+            {label}
+            {required && <span className={classes.required}>*</span>}
           </span>
-        )}
-        <input 
-          className={classes.input__field}
-          onFocus={onFocusHandle}
-          onBlur={onBlurHandle}
-          onChange={onChangeHandle}
-          placeholder={isFocus || labelFixed || !label ? placeholder : ""}
-          disabled={disabled}
-          {...others} 
-          ref={inputRef}
-        />
-        {endComponent && (
-          <span className={clsx(classes.extra, {[classes.extra__not__focus]:!isFocus})}>
-            {disabled && <div className={classes.extra__disabled} />}
-            {endComponent}
-          </span>
+        </label>
+        <div 
+          className={clsx(
+            classes.input__container, 
+            {
+              [classes.input__focus]:isFocus, 
+              [classes.input__disabled]:disabled
+            }
+          )} 
+          tabIndex="-1"
+          ref={ref}
+        >
+          {startComponent && (
+            <span className={clsx(classes.extra, {[classes.extra__not__focus]:!isFocus})}>
+              {disabled && <div className={classes.extra__disabled} />}
+              {startComponent}
+            </span>
+          )}
+          {multiline ? (
+            <textarea
+              className={classes.textarea__field}
+              onFocus={onFocusHandle}
+              onBlur={onBlurHandle}
+              onChange={onChangeHandle}
+              placeholder={isFocus || labelFixed || !label ? placeholder : ""}
+              disabled={disabled}
+              {...others}
+            >
+              {defaultValue}
+            </textarea>
+          ) : (
+            <input 
+            className={classes.input__field}
+            onFocus={onFocusHandle}
+            onBlur={onBlurHandle}
+            onChange={onChangeHandle}
+            placeholder={isFocus || labelFixed || !label ? placeholder : ""}
+            disabled={disabled}
+            {...others} 
+            />
+          )}
+          
+          {endComponent && (
+            <span className={clsx(classes.extra, {[classes.extra__not__focus]:!isFocus})}>
+              {disabled && <div className={classes.extra__disabled} />}
+              {endComponent}
+            </span>
+          )}
+        </div>
+        {helpComponent && (
+          <label className={clsx(classes.help__component,{[classes.help__component__focus]:isFocus || helpFixed})}>
+            {helpComponent}
+          </label>
         )}
       </div>
-      {helpComponent && (
-        <label className={clsx(classes.helper__text,{[classes.helper__text__focus]:isFocus || helpFixed})}>
-          {helpComponent}
-        </label>
-      )}
-      
     </div>
   )
 })
@@ -309,9 +353,14 @@ CCTextField.propTypes = {
     PropTypes.oneOf(["primary", "secondary", "error", "warning", "sub", "icon"]),
     PropTypes.string
   ]),
+  /* multiline이 true라면 textarea태그로 변경 */
+  multiline: PropTypes.bool,
+  /* textarea의 크기조정 여부 */
+  disableResize: PropTypes.bool,
   size: PropTypes.oneOf(["medium", "small"]),
   width: PropTypes.number,
   height: PropTypes.number,
+  /* variant가 outlined일 때 borderRadius 크기 (1~15) */
   round: PropTypes.number,
   defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
@@ -320,11 +369,16 @@ CCTextField.propTypes = {
   error: PropTypes.bool,
   errorAnimation: PropTypes.bool,
   required: PropTypes.bool,
+  /* label을 위쪽에 고정시킬지 여부 */
   labelFixed: PropTypes.bool,
+  /* helpComponent를 아래쪽에 고정시킬지 여부 */
   helpFixed: PropTypes.bool,
+  /* variant가 text일 때 borderBottom을 제거할지 여부 */
   disableLine: PropTypes.bool,
+
   // startComponent: PropTypes.node,
   // endComponent: PropTypes.node,
+  // helpComponent: PropTypes.node,
 }
 
 CCTextField.defaultProps = {
@@ -332,6 +386,8 @@ CCTextField.defaultProps = {
   type: "text",
   variant: "outlined",
   color: "primary",
+  multiline: false,
+  disableResize: false,
   size: "medium",
   width: null,
   height: null,
@@ -348,6 +404,7 @@ CCTextField.defaultProps = {
   disableLine: false,
   // startComponent: null,
   // endComponent: null,
+  // helpComponent: null,
 }
 
 export default CCTextField;
