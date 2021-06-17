@@ -175,12 +175,23 @@ const useStyles = createUseStyles(theme=> ({
     outline: "none",
   },
   textarea__field: {
+    width: props => {
+      if(props.fullWidth) return "calc(100% - 16px)";
+      if(props.width) return `${parseInt(props.width) - 20}px`;
+      if(props.size === "small") return "120px";
+    },
+    height: props => {
+      if(props.height) return `${props.height - 28}px`; //padding 14*2를 빼줌.
+      if(props.size === "small") return "12px";
+    },
     padding: props => {
       const left = props.startComponent ? "3px" : "10px";
       const right = props.endComponent ? "3px" : "10px";
       return `14px ${right} 14px ${left}`;
     },
     fontSize: "16px",
+    fontFamily: "inherit",
+    textAlign: "inherit",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
     userSelect: props => props.disabled ? "none" : "default",
     border: "none",
@@ -193,6 +204,7 @@ const useStyles = createUseStyles(theme=> ({
     },
     resize: props => {
       if(props.disableResize || props.disabled) return "none";
+      if(props.fullWidth) return "vertical";
     },
     backgroundColor: "unset",
     outline: "none",
@@ -247,7 +259,6 @@ const CCTextField = forwardRef((props, ref) => {
     helpComponent,
     placeholder,
     disableLine,
-    defaultValue,
     error,
     errorAnimation, 
     onFocus, 
@@ -276,7 +287,7 @@ const CCTextField = forwardRef((props, ref) => {
 
   return (
     <div className={classes.container}>
-      <div className={clsx(classes.textfield__container,{[classes.textfield__error]:error && errorAnimation})}>
+      <div className={clsx(classes.textfield__container,{[classes.textfield__error]:errorAnimation})}>
         <label className={clsx(
             classes.label,
             {[classes.label__focus]:isFocus || hasValue || Boolean(startComponent) || labelFixed}
@@ -313,9 +324,7 @@ const CCTextField = forwardRef((props, ref) => {
               placeholder={isFocus || labelFixed || !label ? placeholder : ""}
               disabled={disabled}
               {...others}
-            >
-              {defaultValue}
-            </textarea>
+            />
           ) : (
             <input 
             className={classes.input__field}

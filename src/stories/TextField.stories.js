@@ -12,7 +12,6 @@ export const TextField = ({...options}) => (
       error
       endComponent={<CCButton size="small">검색</CCButton>}
       helpComponent="This is help component"
-      cols={40}
       rows={5}
       {...options}
     /> 
