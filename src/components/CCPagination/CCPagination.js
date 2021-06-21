@@ -133,7 +133,7 @@ const CCPagination = forwardRef((props, ref) => {
             <ArrowBackIos />
           </CCButton>
         </li>
-        {count - totalSibling - totalBoundary < 0 
+        {count - totalSibling - totalBoundary < 2 
           ? (<>
             {[...Array(count)].map((num, index) => (
               <li key={`${classes.pagination}_${index}`}>

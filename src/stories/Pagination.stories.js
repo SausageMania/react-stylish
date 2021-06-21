@@ -8,7 +8,13 @@ export default {
   
 export const Pagination = ({...options}) => (
   <div style={{ padding: "5px" }}>
-    <CCPagination onChange={(e, page)=>console.log(page)} count={20} siblingCount={2} boundaryCount={2} defaultPage={6}/>
+    <CCPagination 
+      onChange={(e, page)=>console.log(page)} 
+      count={12} 
+      siblingCount={2} 
+      boundaryCount={2} 
+      defaultPage={4}
+    />
   </div>
 )
 
