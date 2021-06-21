@@ -24,7 +24,7 @@ const useStyles = createUseStyles(theme=>({
 }));
 
 const CCPagination = forwardRef((props, ref) => {
-  const {count, defaultPage, boundaryCount, siblingCount, onChange, ...others } = props;
+  const {count, defaultPage, boundaryCount, siblingCount, showAll, onChange, ...others } = props;
   const classes = useStyles(props);
   const [currPage, setCurrPage] = useState(defaultPage ? defaultPage : 1);
   const [middlePage, setMiddlePage] = useState(
@@ -133,7 +133,7 @@ const CCPagination = forwardRef((props, ref) => {
             <ArrowBackIos />
           </CCButton>
         </li>
-        {count - totalSibling - totalBoundary < 2 
+        {count - totalSibling - totalBoundary < 2 || showAll
           ? (<>
             {[...Array(count)].map((num, index) => (
               <li key={`${classes.pagination}_${index}`}>
@@ -266,15 +266,17 @@ CCPagination.propTypes = {
   siblingCount: PropTypes.number,
   boundaryCount: PropTypes.number,
   defaultPage: PropTypes.number,
+  showAll: PropTypes.bool,
 };
 
 CCPagination.defaultProps = {
   round: 10,
   square: 23,
   color: "primary",
-  siblingCount: 2,
+  siblingCount: 1,
   boundaryCount: 2,
-  defaultPage: 1, 
+  defaultPage: 1,
+  showAll: false,
 }
 
 export default CCPagination;
