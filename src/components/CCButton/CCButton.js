@@ -6,7 +6,7 @@ const useStyles = createUseStyles(theme => ({
   button: {
     width: props => {
       if(props.fullWidth) return "100%";
-      if(props.square) return props.square; 
+      if(props.square) return `${props.square}px`; 
       if(props.width) return props.width;
       // return "auto";
     },
@@ -17,7 +17,7 @@ const useStyles = createUseStyles(theme => ({
       return "64px";
     },
     height: props => {
-      if(props.square) return props.square; 
+      if(props.square) return `${props.square}px`; 
       if(props.height) return props.height;
       return 'auto';
     },
