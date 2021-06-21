@@ -84,8 +84,10 @@ const CCPagination = forwardRef((props, ref) => {
     setCurrPage(newCurrPage);
     if(newCurrPage > 1 + boundaryCount + siblingCount)
       setMiddlePage(newCurrPage);
-    else
+    else{
       setMiddlePage(2 + boundaryCount + siblingCount);
+      setPrevHover(false);
+    }
   }
 
   const nextSiblingClickHandle = e => {
@@ -94,18 +96,20 @@ const CCPagination = forwardRef((props, ref) => {
     setCurrPage(newCurrPage);
     if(newCurrPage < count - boundaryCount - siblingCount)
       setMiddlePage(newCurrPage);
-    else
+    else{
       setMiddlePage(count - boundaryCount - siblingCount - 1);
+      setNextHover(false);
+    }
   }
 
   const siblingPageClickHandle = (e, newCurrPage) => {
-    if(currPage > newCurrPage){
+    if(currPage > newCurrPage && newCurrPage < count - boundaryCount - siblingCount - 1){
       if(newCurrPage > 1 + boundaryCount + siblingCount)
         setMiddlePage(newCurrPage);
       else
         setMiddlePage(2 + boundaryCount + siblingCount);
     }
-    else{
+    else if(currPage < newCurrPage && newCurrPage > 2 + boundaryCount + siblingCount){
       if(newCurrPage < count - boundaryCount - siblingCount)
         setMiddlePage(newCurrPage);
       else
