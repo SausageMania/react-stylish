@@ -6,6 +6,21 @@ export default {
   component: CCTable,
 }
 
-export const Table = ({...options}) => ( <CCTable {...options}/> )
+const columns = [
+  {
+    title: "Name", 
+    width: 150,
+  },
+  {
+    title: "Age", 
+    width: 100,
+  },
+  {
+    title: "Sex", 
+    width: 100,
+  },
+]
+
+export const Table = ({...options}) => ( <CCTable columns={columns}/> )
 
 Table.storyName = "single.table";

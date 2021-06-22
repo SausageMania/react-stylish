@@ -37,6 +37,7 @@ const useStyles = createUseStyles(theme => ({
     fontSize: props => {
       if(props.size === "medium") return "14px";
       if(props.size === "small") return "12px";
+      if(props.size) return `${props.size}px`;
       return "14px";
     },
     border: props => {
@@ -172,8 +173,9 @@ const useStyles = createUseStyles(theme => ({
     position: "relative",
     "& > svg " : {
       fontSize: props => {
-        if(props.size === "small") return "12px"
-        return "14px";
+        if(props.size === "small") return "12px";
+        if(props.size) return `${props.size}px`;
+        return "inherit";
       },
     }
   },

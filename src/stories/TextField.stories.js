@@ -1,4 +1,5 @@
 import { CCTextField, CCButton } from '../components';
+import { Search } from '@material-ui/icons';
 import React from 'react';
 
 export default {
@@ -10,7 +11,7 @@ export const TextField = ({...options}) => (
   <div style={{padding: "5px"}}>
     <CCTextField
       startComponent={<span>$</span>}
-      endComponent={<CCButton size="medium">검색</CCButton>}
+      endComponent={<CCButton square={30} round={10} size={18}><Search fontSize="inherit"/></CCButton>}
       helpComponent={<span>Please insert the money cost.</span>}
       rows={1}
       {...options}

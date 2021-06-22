@@ -136,7 +136,7 @@ const CCPagination = forwardRef((props, ref) => {
           <CCButton 
             onClick={prevClickHandle} 
             size={size} 
-            disabled={currPage === 1 || props.disabled} 
+            disabled={currPage === 1} 
             {...others}
           >
             <ArrowBackIos />
@@ -260,7 +260,7 @@ const CCPagination = forwardRef((props, ref) => {
           <CCButton 
             onClick={nextClickHandle} 
             size={size} 
-            disabled={currPage === count || props.disabled} 
+            disabled={currPage === count} 
             {...others}
           >
             <ArrowForwardIos/>
@@ -289,7 +289,6 @@ CCPagination.propTypes = {
   defaultPage: PropTypes.number,
   showAll: PropTypes.bool,
   selectVariant: PropTypes.oneOf(["contained", "dashed", "outlined"]),
-  disabled: PropTypes.bool,
 };
 
 CCPagination.defaultProps = {
@@ -309,7 +308,6 @@ CCPagination.defaultProps = {
   showAll: false,
   /* 선택된 페이지의 variant */
   selectVariant: "contained",
-  disabled: false,
 }
 
 export default CCPagination;

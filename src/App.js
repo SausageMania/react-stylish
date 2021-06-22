@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { ThemeProvider, createUseStyles} from 'react-jss';
 import theme from './styles/theme';
-import { CCButton, CCSwitch, CCTextField } from './components';
+import { CCButton, CCSwitch, CCTextField, CCPagination } from './components';
 
 const styles = createUseStyles({
   container: {
@@ -88,6 +88,9 @@ const App = () => {
         </div>
         <div>
           result: {result}
+        </div>
+        <div>
+          <CCPagination count={10} />
         </div>
       </div>
       
