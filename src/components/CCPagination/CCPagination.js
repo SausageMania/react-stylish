@@ -24,7 +24,7 @@ const useStyles = createUseStyles(theme=>({
 }));
 
 const CCPagination = forwardRef((props, ref) => {
-  const {count, defaultPage, boundaryCount, siblingCount, showAll, onChange, ...others } = props;
+  const {count, defaultPage, boundaryCount, siblingCount, showAll, selectVariant, onChange, ...others } = props;
   const classes = useStyles(props);
   const [currPage, setCurrPage] = useState(defaultPage ? defaultPage : 1);
   const [middlePage, setMiddlePage] = useState(
@@ -82,11 +82,13 @@ const CCPagination = forwardRef((props, ref) => {
     const newCurrPage = currPage - totalSibling > 0 ? currPage - totalSibling : 1;
     onChange && onChange(e, newCurrPage);
     setCurrPage(newCurrPage);
-    if(newCurrPage > 1 + boundaryCount + siblingCount)
+    if(newCurrPage > middlePage)
+      return;
+    else if(newCurrPage > 2 + boundaryCount + siblingCount)
       setMiddlePage(newCurrPage);
     else{
-      setMiddlePage(2 + boundaryCount + siblingCount);
       setPrevHover(false);
+      setMiddlePage(2 + boundaryCount + siblingCount);
     }
   }
 
@@ -94,22 +96,24 @@ const CCPagination = forwardRef((props, ref) => {
     const newCurrPage = currPage + totalSibling < count ? currPage + totalSibling : count;
     onChange && onChange(e, newCurrPage);
     setCurrPage(newCurrPage);
-    if(newCurrPage < count - boundaryCount - siblingCount)
+    if(newCurrPage < middlePage)
+      return;
+    else if(newCurrPage < count - boundaryCount - siblingCount - 1)
       setMiddlePage(newCurrPage);
     else{
-      setMiddlePage(count - boundaryCount - siblingCount - 1);
       setNextHover(false);
+      setMiddlePage(count - boundaryCount - siblingCount - 1);
     }
   }
 
   const siblingPageClickHandle = (e, newCurrPage) => {
-    if(currPage > newCurrPage && newCurrPage < count - boundaryCount - siblingCount - 1){
+    if(newCurrPage < currPage && newCurrPage < count - boundaryCount - siblingCount - 1){
       if(newCurrPage > 1 + boundaryCount + siblingCount)
         setMiddlePage(newCurrPage);
       else
         setMiddlePage(2 + boundaryCount + siblingCount);
     }
-    else if(currPage < newCurrPage && newCurrPage > 2 + boundaryCount + siblingCount){
+    else if(newCurrPage > currPage && newCurrPage > 2 + boundaryCount + siblingCount){
       if(newCurrPage < count - boundaryCount - siblingCount)
         setMiddlePage(newCurrPage);
       else
@@ -129,7 +133,12 @@ const CCPagination = forwardRef((props, ref) => {
           </CCButton>
         </li>
         <li>
-          <CCButton onClick={prevClickHandle} size={size} disabled={currPage === 1} {...others}>
+          <CCButton 
+            onClick={prevClickHandle} 
+            size={size} 
+            disabled={currPage === 1 || props.disabled} 
+            {...others}
+          >
             <ArrowBackIos />
           </CCButton>
         </li>
@@ -138,7 +147,7 @@ const CCPagination = forwardRef((props, ref) => {
             {[...Array(count)].map((num, index) => (
               <li key={`${classes.pagination}_${index}`}>
                 <CCButton 
-                  variant={currPage === index + 1 ? "contained" : "text"}
+                  variant={currPage === index + 1 ? selectVariant : "text"}
                   onClick={e => pageClickHandle(e, index + 1)}
                   size={size}
                   {...others}
@@ -152,7 +161,7 @@ const CCPagination = forwardRef((props, ref) => {
             {[...Array(boundaryCount)].map((n, index) => (
               <li key={`${classes.pagination}_${index}`}>
                 <CCButton
-                  variant={currPage === index + 1 ? "contained" : "text"}
+                  variant={currPage === index + 1 ? selectVariant : "text"}
                   onClick={e => pageClickHandle(e, index + 1)}
                   size={size}
                   {...others}
@@ -178,8 +187,11 @@ const CCPagination = forwardRef((props, ref) => {
             (
               <li>
                 <CCButton
-                  variant={currPage === 1 + boundaryCount ? "contained" : "text"}
-                  onClick={()=>setCurrPage(1 + boundaryCount)}
+                  variant={currPage === 1 + boundaryCount ? selectVariant : "text"}
+                  onClick={e =>{
+                    onChange && onChange(e, 1 + boundaryCount);
+                    setCurrPage(1 + boundaryCount);
+                  }}
                   size={size}
                   {...others}
                 >
@@ -190,7 +202,7 @@ const CCPagination = forwardRef((props, ref) => {
             {[...Array(totalSibling)].map((n, index) => (
               <li key={`${classes.pagination}_${index}`}>
                 <CCButton
-                  variant={currPage === middlePage - siblingCount + index ? "contained" : "text"}
+                  variant={currPage === middlePage - siblingCount + index ? selectVariant : "text"}
                   onClick={e => siblingPageClickHandle(e, middlePage - siblingCount + index)}
                   size={size}
                   {...others}
@@ -216,8 +228,11 @@ const CCPagination = forwardRef((props, ref) => {
             (
               <li>
                 <CCButton
-                  variant={currPage === count - boundaryCount ? "contained" : "text"}
-                  onClick={()=>setCurrPage(count - boundaryCount)}
+                  variant={currPage === count - boundaryCount ? selectVariant : "text"}
+                  onClick={e =>{
+                    onChange && onChange(e, count - boundaryCount);
+                    setCurrPage(count - boundaryCount);
+                  }}
                   size={size}
                   {...others}
                 >
@@ -228,7 +243,7 @@ const CCPagination = forwardRef((props, ref) => {
             {[...Array(boundaryCount)].map((n, index) => (
               <li key={`${classes.pagination}_${index}`}>
                 <CCButton
-                  variant={currPage === count - boundaryCount + index + 1 ? "contained" : "text"}
+                  variant={currPage === count - boundaryCount + index + 1 ? selectVariant : "text"}
                   onClick={e => pageClickHandle(e, count - boundaryCount + index + 1)}
                   size={size}
                   {...others}
@@ -242,7 +257,12 @@ const CCPagination = forwardRef((props, ref) => {
         }
         
         <li>
-          <CCButton onClick={nextClickHandle} size={size} disabled={currPage === count} {...others}>
+          <CCButton 
+            onClick={nextClickHandle} 
+            size={size} 
+            disabled={currPage === count || props.disabled} 
+            {...others}
+          >
             <ArrowForwardIos/>
           </CCButton>
         </li>
@@ -263,20 +283,31 @@ CCPagination.propTypes = {
     PropTypes.oneOf(["primary", "secondary", "error", "warning", "sub", "icon"]),
     PropTypes.string
   ]),
+  count: PropTypes.number.isRequired,
   siblingCount: PropTypes.number,
   boundaryCount: PropTypes.number,
   defaultPage: PropTypes.number,
   showAll: PropTypes.bool,
+  selectVariant: PropTypes.oneOf(["contained", "dashed", "outlined"])
 };
 
 CCPagination.defaultProps = {
   round: 10,
+  /* 페이지 버튼의 크기 (px단위) */
   square: 23,
   color: "primary",
-  siblingCount: 1,
-  boundaryCount: 2,
+  /* 페이지의 총 개수 (required) */
+  count: 1,
+  /* 중간에 나타날 이전 및 이후 페이지의 개수 */
+  siblingCount: 0,
+  /* 시작과 끝 페이지에서 항상 보여질 페이지의 개수 */
+  boundaryCount: 1,
+  /* 처음에 선택될 페이지 번호 */
   defaultPage: 1,
+  /* 모든 페이지를 다 보여줄지 여부 */
   showAll: false,
+  /* 선택된 페이지의 variant */
+  selectVariant: "contained",
 }
 
 export default CCPagination;
