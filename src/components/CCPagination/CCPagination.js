@@ -144,7 +144,7 @@ const CCPagination = forwardRef((props, ref) => {
         </li>
         {count - totalSibling - totalBoundary < 2 || showAll
           ? (<>
-            {[...Array(count)].map((num, index) => (
+            {[...Array(count)].map((n, index) => (
               <li key={`${classes.pagination}_${index}`}>
                 <CCButton 
                   variant={currPage === index + 1 ? selectVariant : "text"}
@@ -288,7 +288,8 @@ CCPagination.propTypes = {
   boundaryCount: PropTypes.number,
   defaultPage: PropTypes.number,
   showAll: PropTypes.bool,
-  selectVariant: PropTypes.oneOf(["contained", "dashed", "outlined"])
+  selectVariant: PropTypes.oneOf(["contained", "dashed", "outlined"]),
+  disabled: PropTypes.bool,
 };
 
 CCPagination.defaultProps = {
@@ -308,6 +309,7 @@ CCPagination.defaultProps = {
   showAll: false,
   /* 선택된 페이지의 variant */
   selectVariant: "contained",
+  disabled: false,
 }
 
 export default CCPagination;
