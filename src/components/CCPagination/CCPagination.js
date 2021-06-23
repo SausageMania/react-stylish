@@ -107,12 +107,14 @@ const CCPagination = forwardRef((props, ref) => {
   }
 
   const siblingPageClickHandle = (e, newCurrPage) => {
+    /* 가운데 페이지보다 앞의 페이지를 클릭할 경우 */
     if(newCurrPage < currPage && newCurrPage < count - boundaryCount - siblingCount - 1){
       if(newCurrPage > 1 + boundaryCount + siblingCount)
         setMiddlePage(newCurrPage);
       else
         setMiddlePage(2 + boundaryCount + siblingCount);
     }
+    /* 가운데 페이지보다 뒤의 페이지를 클릭할 경우 */
     else if(newCurrPage > currPage && newCurrPage > 2 + boundaryCount + siblingCount){
       if(newCurrPage < count - boundaryCount - siblingCount)
         setMiddlePage(newCurrPage);

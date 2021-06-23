@@ -72,9 +72,9 @@ const useStyles = createUseStyles(theme => ({
 
 const CCCheckbox = forwardRef((props, ref) => {
   const classes = useStyles(props);
-  const {defaultChecked, onChange, disableRipple, ...others} = props;
+  const {checked, onChange, disableRipple, ...others} = props;
 
-  const [isChecked, setIsChecked] = useState(defaultChecked);
+  const [isChecked, setIsChecked] = useState(checked);
   const [coords, setCoords] = useState({x: -1, y: -1});
   const [isRippling, setIsRippling] = useState(false);
 
@@ -83,12 +83,16 @@ const CCCheckbox = forwardRef((props, ref) => {
       setIsRippling(true);
   },[coords]);
 
+  useEffect(()=>{
+    setIsChecked(checked);
+  },[checked])
+
   const checkClickHandle = e => {
     if(!disableRipple){
       setIsRippling(false);
       setCoords({x: 0, y: 0});
     }
-    setIsChecked(!isChecked);
+    setIsChecked(e.target.checked);
     onChange && onChange(e);
   }
 
@@ -98,7 +102,7 @@ const CCCheckbox = forwardRef((props, ref) => {
         setIsRippling(false);
         setCoords({x: 0, y: 0});
       }
-      setIsChecked(!isChecked);
+      setIsChecked(e.target.checked);
       onChange && onChange(e);
     }
   }
@@ -120,7 +124,7 @@ const CCCheckbox = forwardRef((props, ref) => {
         type="checkbox" 
         className={classes.input} 
         onChange={checkClickHandle}
-        defaultChecked={defaultChecked}
+        checked={isChecked}
         ref={ref} 
         {...others}
       />
@@ -134,7 +138,7 @@ CCCheckbox.propTypes = {
     PropTypes.oneOf(["primary", "secondary", "error", "warning", "sub", "icon"]),
     PropTypes.string
   ]),
-  defaultChecked: PropTypes.bool,
+  checked: PropTypes.bool,
   disableRipple: PropTypes.bool,
   disabled: PropTypes.bool,
 }
@@ -142,7 +146,7 @@ CCCheckbox.propTypes = {
 CCCheckbox.defaultProps = {
   size: "medium",
   color: "primary",
-  defaultChecked: false,
+  checked: false,
   disableRipple: false,
   disabled: false
 }

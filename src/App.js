@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { ThemeProvider, createUseStyles} from 'react-jss';
 import theme from './styles/theme';
-import { CCButton, CCSwitch, CCTextField, CCPagination } from './components';
+import { CCButton, CCSwitch, CCTextField, CCPagination, CCTable } from './components';
 
 const styles = createUseStyles({
   container: {
@@ -19,7 +19,58 @@ const styles = createUseStyles({
     padding: "5px 0",
     alignItems: "center",
   }
-})
+});
+
+const columns = [
+  {
+    key: "Name",
+    title: "Name", 
+    width: 150,
+  },
+  {
+    key: "Age",
+    title: "Age", 
+    width: 50,
+  },
+  {
+    key: "long_title",
+    title: "Very Very Long Long Title",
+  },
+  {
+    key: "Sex",
+    title: "Sex", 
+    width: 100,
+  },
+];
+
+const rows= [
+  {
+    long_title: <CCButton>Button</CCButton>,
+    Name: <div>John Ericson</div>,
+    Age: 25,
+    Sex: "male",
+  },
+  {
+    Name: <strong>Ellis Wonderland</strong>,
+    Age: 29,
+    Sex: "female",
+  },
+  {
+    Name: <strong>Ellis Wonderland</strong>,
+    Age: 29,
+    Sex: "female",
+  },
+  {
+    Name: <strong>Ellis Wonderland</strong>,
+    Age: 29,
+    Sex: "female",
+  },
+  {
+    Name: <strong>Ellis Wonderland</strong>,
+    Age: 29,
+    Sex: "female",
+  },
+]
 
 const App = () => {
   const classes = styles();
@@ -90,6 +141,7 @@ const App = () => {
           result: {result}
         </div>
         <div>
+          <CCTable width={600} height={200} columns={columns} rows={rows}/>
           <CCPagination count={10} />
         </div>
       </div>

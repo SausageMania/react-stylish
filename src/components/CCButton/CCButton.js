@@ -90,13 +90,13 @@ const useStyles = createUseStyles(theme => ({
     },
     "&:hover": {
       background: props => {
+        if (props.disabled || props.disableHover) return "none";
         if (props.selected) return theme.palette.selected.dark;
         if (props.variant === "contained") {
           if (props.disabled) return "rgba(0, 0, 0, 0.12)";
           if (theme.palette?.[props.color]) return theme.palette?.[props.color].dark;
           return props.color ? props.color : theme.palette.primary.dark;
         }
-        if (props.disabled) return "none";
         return "rgb(236, 236, 236)";
       },
     },
@@ -212,7 +212,8 @@ const CCButton = forwardRef((props, ref) => {
     endIcon, 
     fullWidth, 
     disableRipple,
-    disablePadding, 
+    disablePadding,
+    disableHover, 
     ...others
   } = props;
 
@@ -284,9 +285,13 @@ CCButton.propTypes = {
   round: PropTypes.number,  //1부터 10 사이의 값을 가짐. 낮을수록 각이 지며, 높을수록 동그레짐. (default: 3)
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
-  size: PropTypes.oneOf(["medium", "small"]),
+  size: PropTypes.oneOfType([
+    PropTypes.oneOf(["medium", "small"]),
+    PropTypes.number
+  ]),
   disableRipple: PropTypes.bool,
   disablePadding: PropTypes.bool,
+  disableHover: PropTypes.bool,
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
 };
@@ -300,6 +305,7 @@ CCButton.defaultProps = {
   size: "medium",
   disableRipple: false,
   disablePadding: false,
+  disableHover: false,
 }
 
 export default CCButton;
