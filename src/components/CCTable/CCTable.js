@@ -98,7 +98,7 @@ const CCTable = forwardRef((props,ref) => {
               justifyContent: column.justify
             }}
           >
-            {column.title}
+            {column.label}
           </div>
         ))}
       </div>

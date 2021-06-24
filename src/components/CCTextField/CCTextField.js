@@ -215,7 +215,7 @@ const useStyles = createUseStyles(theme=> ({
   },
   /* startComponent와 endComponent 스타일 */
   extra: {
-    padding: "5px",
+    padding: "0 5px",
     position: "relative",
   },
   /* textfield가 focus상태가 아닐때의 스타일 */

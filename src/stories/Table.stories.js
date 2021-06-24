@@ -10,28 +10,28 @@ export default {
 const columns = [
   {
     key: "Name",
-    title: "Name", 
+    label: "Name", 
     width: "30%",
     justify: "center",
   },
   {
     key: "Age",
-    title: "Age", 
+    label: "Age", 
     width: "10%",
   },
   {
-    key: "long_title",
-    title: "Very Very Long Long Title",
+    key: "long_label",
+    label: "Very Very Long Long label",
     width: "30%"
   },
   {
     key: "Sex",
-    title: "Sex", 
+    label: "Sex", 
     width: "15%",
   },
   {
     key: "search",
-    title: "option",
+    label: "option",
     width: "15%",
     justify: "flex-end"
   }
@@ -39,12 +39,12 @@ const columns = [
 
 const rows= [
   {
-    long_title: <CCButton disableHover>Button</CCButton>,
+    long_label: <CCButton disableHover>Button</CCButton>,
     Name: <div>John Eric</div>,
     Age: 25,
     Sex: "male",
     justify: {
-      long_title: "center",
+      long_label: "center",
     }
   },
   {
@@ -82,22 +82,23 @@ export const SingleTable = ({...options}) => ( <CCTable columns={columns} rows={
 export const CombinedTable = () => (
   <div style={{width: "800px", border: "1px solid", borderRadius: "5px", padding: "5px"}}>
     <div style={{padding: "3px 0", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-      <div style={{fontSize: "18px", fontWeight: 500}}>Table with components</div>
+      <div style={{fontSize: "20px", fontWeight: 500}}>Table with components</div>
       <CCTextField 
         endComponent={
-          <CCIconButton size={17} onClick={()=>alert('button click!')}>
+          <CCIconButton size={17} onClick={()=>alert('button click!')} color="secondary">
             <Search />
           </CCIconButton>
         }
         size="small"
-        // height={40}
+        height={30}
         placeholder="search"
         label="search"
+        color="secondary"
       />
     </div>
     <CCTable columns={columns} rows={rows} height={200}/>
     <div style={{display: "flex", justifyContent: "center"}}>
-      <CCPagination count={20} siblingCount={2} boundaryCount={2}/>
+      <CCPagination count={20} siblingCount={2} boundaryCount={2} color="secondary"/>
     </div>
   </div>
 );
