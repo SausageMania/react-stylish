@@ -6,7 +6,7 @@ const CCIconButton = forwardRef((props, ref) => {
   const {children, ...others} = props;
 
   return (
-    <CCButton round={99} square={props.size + 15} ref={ref} {...others}>
+    <CCButton round={99} square={props.size + 10} disablePadding ref={ref} {...others}>
       {children}
     </CCButton>
   );

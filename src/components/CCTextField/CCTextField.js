@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -150,14 +150,14 @@ const useStyles = createUseStyles(theme=> ({
       return "none";
     },
     height: props => {
-      if(props.height) return `${props.height - 28}px`; //padding 14*2를 빼줌.
-      if(props.size === "small") return "12px";
-      return "20px";
+      if(props.height) return props.height; 
+      if(props.size === "small") return "40px";
+      return "50px";
     },
     padding: props => {
       const left = props.startComponent ? "3px" : "10px";
       const right = props.endComponent ? "3px" : "10px";
-      return `14px ${right} 14px ${left}`;
+      return `0 ${right} 0 ${left}`;
     },
     fontSize: "16px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
@@ -271,6 +271,7 @@ const CCTextField = forwardRef((props, ref) => {
     onChange, 
     ...others 
   } = props;
+  const inputRef = useRef(null);
 
   const [isFocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(props.defaultValue));
@@ -290,6 +291,10 @@ const CCTextField = forwardRef((props, ref) => {
     onChange && onChange(e);
   }
 
+  // useEffect(()=>{
+  // },[props.value])
+
+  
   return (
     <div className={classes.root}>
       <div className={clsx(classes.textfield__container,{[classes.textfield__error]:errorAnimation})}>
@@ -338,6 +343,7 @@ const CCTextField = forwardRef((props, ref) => {
               onChange={onChangeHandle}
               placeholder={isFocus || labelFixed || !label || startComponent ? placeholder : ""}
               disabled={disabled}
+              ref={inputRef}
               {...others} 
             />
           )}
@@ -374,9 +380,8 @@ CCTextField.propTypes = {
   size: PropTypes.oneOf(["medium", "small"]),
   width: PropTypes.number,
   height: PropTypes.number,
-  /* variant가 outlined일 때 borderRadius 크기 (1~15) */
+  /* variant가 outlined일 때 borderRadius 크기 (1부터) */
   round: PropTypes.number,
-  defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
@@ -406,7 +411,6 @@ CCTextField.defaultProps = {
   width: null,
   height: null,
   round: 3,
-  defaultValue: null,
   placeholder: null,
   disabled: false,
   fullWidth: false,

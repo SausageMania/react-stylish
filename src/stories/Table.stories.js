@@ -1,6 +1,7 @@
 import { CCTable, CCButton, CCIconButton, CCPagination, CCTextField } from '../components';
 import { Search, MoreVert } from '@material-ui/icons';
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Table',
@@ -13,6 +14,9 @@ const columns = [
     label: "Name", 
     width: "30%",
     justify: "center",
+    Styles: {
+      backgroundColor: "red",
+    }
   },
   {
     key: "Age",
@@ -40,8 +44,8 @@ const columns = [
 const rows= [
   {
     long_label: <CCButton disableHover>Button</CCButton>,
-    Name: <div>John Eric</div>,
-    Age: 25,
+    Name: <div>John Wick</div>,
+    Age: 45,
     Sex: "male",
     justify: {
       long_label: "center",
@@ -58,8 +62,8 @@ const rows= [
     Sex: "male",
   },
   {
-    Name: "Sam Hillary",
-    Age: 15,
+    Name: "Donald Trump",
+    Age: 65,
     Sex: "male",
     justify: {
       Age: "flex-end",
@@ -74,7 +78,7 @@ const rows= [
     search: <CCIconButton size={20} disableHover><MoreVert /></CCIconButton>,
     justify: {
       search: "flex-end"
-    }
+    },
   },
 ]
 
@@ -85,7 +89,7 @@ export const CombinedTable = () => (
       <div style={{fontSize: "20px", fontWeight: 500}}>Table with components</div>
       <CCTextField 
         endComponent={
-          <CCIconButton size={17} onClick={()=>alert('button click!')} color="secondary">
+          <CCIconButton size={17} onClick={action("search")} color="secondary">
             <Search />
           </CCIconButton>
         }
@@ -98,7 +102,13 @@ export const CombinedTable = () => (
     </div>
     <CCTable columns={columns} rows={rows} height={200}/>
     <div style={{display: "flex", justifyContent: "center"}}>
-      <CCPagination count={20} siblingCount={2} boundaryCount={2} color="secondary"/>
+      <CCPagination 
+        count={20} 
+        siblingCount={2} 
+        boundaryCount={2} 
+        color="secondary" 
+        onChange={action("page")}
+      />
     </div>
   </div>
 );

@@ -10,9 +10,10 @@ export default {
 export const TextField = ({...options}) => (
   <div style={{padding: "5px"}}>
     <CCTextField
-      startComponent={<span>$</span>}
+      // startComponent={<span>$</span>}
       endComponent={<CCIconButton size={20}><Search /></CCIconButton>}
       helpComponent={<span>Please insert the money cost.</span>}
+      onChange={e=> console.log(e.target.value)}
       rows={1}
       {...options}
     /> 

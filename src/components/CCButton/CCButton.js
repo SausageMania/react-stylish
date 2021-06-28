@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme => ({
   button: {
@@ -77,7 +78,7 @@ const useStyles = createUseStyles(theme => ({
     lineHeight: "1.75",
     cursor: "pointer",
     userSelect: "none",
-    transition: "background-color 250ms",
+    transition: "all ease-in-out 250ms",
     overflow: "hidden",
     position: "relative",
     boxSizing: "border-box",
@@ -204,7 +205,8 @@ const useStyles = createUseStyles(theme => ({
 const CCButton = forwardRef((props, ref) => {
   const classes = useStyles(props);
   const {
-    children, 
+    children,
+    className, 
     onMouseDown, 
     onMouseUp, 
     onClick, 
@@ -256,7 +258,7 @@ const CCButton = forwardRef((props, ref) => {
 
   return (
     <button 
-      className={classes.button} 
+      className={clsx(className, classes.button)} 
       onMouseDown={onMouseDownHandle}
       onKeyDown={onKeyDownHandle}
       onMouseUp={onMouseUpHandle}

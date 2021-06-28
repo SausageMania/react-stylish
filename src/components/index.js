@@ -5,3 +5,4 @@ export { default as CCPagination } from './CCPagination';
 export { default as CCTable } from './CCTable';
 export { default as CCCheckbox } from './CCCheckbox';
 export { default as CCIconButton } from './CCIconButton';
+export { default as CCSelect } from './CCSelect';

@@ -20,7 +20,6 @@ const useStyles = createUseStyles(theme => ({
       })
       return totalWidth;
     },
-    minHeight: "40px",
     display: "flex",
     position: props => props.disableSticky ? "static" : "sticky",
     top: 0,
@@ -33,10 +32,12 @@ const useStyles = createUseStyles(theme => ({
     // overflow: "hidden",
     // textOverflow: "ellipsis",
     // whiteSpace: "nowrap",
-    // wordBreak: "break-all",
+    wordBreak: "break-word",
     margin: "0 5px",
     display: "flex",
     justifyContent: props => props.justify ? props.justify : "flex-start",
+    alignItems: "center",
+    minHeight: "35px",
   },
   table__row: {
     width: props => {
@@ -49,7 +50,6 @@ const useStyles = createUseStyles(theme => ({
     },
   },
   row__body: {
-    minHeight: "40px",
     display: "flex",
     alignItems: "center",
     "&:hover": {
@@ -65,11 +65,13 @@ const useStyles = createUseStyles(theme => ({
   row__content: {
     // overflow: "hidden",
     // textOverflow: "ellipsis",
-    // whiteSpace: "wrap",
-    // wordBreak: "break-all",
+    // whiteSpace: "nowrap",
+    wordBreak: "break-word",
     margin: "0 5px",
+    minHeight: "35px",
     display: "flex",
     justifyContent: props => props.justify ? props.justify : "flex-start",
+    alignItems: "center",
   },
   checkbox: {
     width: "50px",
@@ -85,21 +87,18 @@ const CCTable = forwardRef((props,ref) => {
   return (
     <div className={classes.table} ref={ref}>
       <div className={classes.table__column}>
-        {/* <div className={classes.checkbox}>
-          <CCCheckbox onChange={allCheckClickHandle}/>
-        </div> */}
         {columns.map(column => (
-          <div 
-            key={column.key} 
-            className={classes.column__content} 
-            style={{
-              width: column.width ? column.width : 200,
-              display: "flex",
-              justifyContent: column.justify
-            }}
-          >
-            {column.label}
-          </div>
+          <React.Fragment key={column.key}>
+            <div 
+              className={classes.column__content} 
+              style={{
+                width: column.width ? column.width : 200,
+                justifyContent: column.justify,
+              }}
+            >
+              {column.label}
+            </div>
+          </React.Fragment>
         ))}
       </div>
       <div className={classes.table__row}>
@@ -114,14 +113,12 @@ const CCTable = forwardRef((props,ref) => {
             )}
             onClick={()=>setSelectedRow(index)}
           >
-            {/* <div className={classes.checkbox}><CCCheckbox checked={allClick}/></div> */}
               {[...Array(columns.length)].map((n, index) => (
                 <div 
                   className={classes.row__content} 
                   style={{
                     width: columns[index].width ? columns[index].width : 200,
-                    display: "flex",
-                    justifyContent: row.justify?.[columns[index].key]
+                    justifyContent: row.justify?.[columns[index].key],
                   }} 
                   key={index}
                 >
