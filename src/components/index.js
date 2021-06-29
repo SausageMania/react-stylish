@@ -6,3 +6,4 @@ export { default as CCTable } from './CCTable';
 export { default as CCCheckbox } from './CCCheckbox';
 export { default as CCIconButton } from './CCIconButton';
 export { default as CCSelect } from './CCSelect';
+export { default as CCFieldGroup } from './CCFieldGroup';

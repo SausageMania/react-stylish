@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -12,6 +12,8 @@ const useStyles = createUseStyles(theme=> ({
       return `${top} 0 ${bottom} 0`
     },
     margin: "6px 0",
+    width: props => props.fieldWidth && props.fieldWidth,
+
   },
   /* startComponent와 endComponent를 포함한 input의 기본 스타일 */
   textfield__container: {
@@ -99,24 +101,47 @@ const useStyles = createUseStyles(theme=> ({
     display: "flex",
     alignItems: "center",
     outline: "none",
-    border: props => {
+    borderTop: props => {
       if(props.variant === "text") return "1px solid transparent";
       if(props.error) return `1px solid ${theme.palette.error.main}`;
       return "1px solid rgba(0, 0, 0, 0.56)";
     },
     borderBottom: props => {
-      if(props.variant === "text" && !props.disableLine){
+      if(props.variant === "text"){
         if(props.error) return `1px solid ${theme.palette.error.main}`;
-        return "1px solid rgba(0, 0, 0, 0.56)";
+        if(props.disableLine) return "none";
       }
+      return "1px solid rgba(0, 0, 0, 0.56)";
+    },
+    borderLeft: props => {
+      if(props.variant === "text") return "1px solid transparent";
+      if(props.error) return `1px solid ${theme.palette.error.main}`;
+      if(props.location){
+        if(props.location === "start")
+         return "1px solid rgba(0, 0, 0, 0.56)";
+        return "none";
+      }
+      return "1px solid rgba(0, 0, 0, 0.56)";
+    },
+    borderRight: props => {
+      if(props.variant === "text") return "1px solid transparent";
+      if(props.error) return `1px solid ${theme.palette.error.main}`;
+      // if(props.location){
+      //   if(props.location === "start")
+      //     return "1px solid rgba(0, 0, 0, 0.56)";
+      //   return "none";
+      // }
+      return "1px solid rgba(0, 0, 0, 0.56)";
     },
     borderRadius: props => {
       if(props.variant === "text") return "none";
-      if(props.round) {
-        const round = (props.round - 1) * 2;
-        return `${round}px`;
+      const round = props.round ? (props.round - 1) * 2 + "px" : "4px";
+      if(props.location){
+        if(props.location === "start") return `${round} 0 0 ${round}`;
+        if(props.location === "middle") return "none";
+        if(props.location === "end") return `0 ${round} ${round} 0`;
       }
-      return "4px";
+      return round;
     },
     transition: "box-shadow linear 0.15s",
   },
@@ -254,6 +279,7 @@ const CCTextField = forwardRef((props, ref) => {
   const classes = useStyles(props);
   const {
     className,
+    fieldWidth,
     label,
     labelFixed,
     helpFixed, 
