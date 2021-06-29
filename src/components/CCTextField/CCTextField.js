@@ -7,10 +7,11 @@ const useStyles = createUseStyles(theme=> ({
   /* 전체 textfield 스타일 */
   root: {
     padding: props => {
-      const top = props.label ? "18px" : "0px";
-      const bottom = props.helpComponent ? "18px" : "0px";
+      const top = props.label ? "16px" : "0px";
+      const bottom = props.helpComponent ? "16px" : "0px";
       return `${top} 0 ${bottom} 0`
     },
+    margin: "6px 0",
   },
   /* startComponent와 endComponent를 포함한 input의 기본 스타일 */
   textfield__container: {
@@ -50,7 +51,7 @@ const useStyles = createUseStyles(theme=> ({
   /* 기본 label 스타일 */
   label: {
     position: "absolute",
-    fontSize: "16px",
+    fontSize: "15px",
     top: props => {
       if(props.height) return `${(props.height - 14) / 2 }px` //padding 14를 빼줌.
       if(props.size === "small") return "14px";
@@ -62,7 +63,7 @@ const useStyles = createUseStyles(theme=> ({
       if(props.error) return theme.palette.error.main;
       return "rgba(0, 0, 0, 0.56)";
     },
-    transition: "all ease-in-out 0.25s",
+    transition: "all linear 0.15s",
     backgroundColor: "none",
     pointerEvents: "none",
   },
@@ -73,12 +74,12 @@ const useStyles = createUseStyles(theme=> ({
       if(props.size === "small") return "translate(-15px, -31px)";
       return "translate(-15px, -34px)"
     },
-    fontSize: "14px",
+    fontSize: "13px",
     padding: "0 3px",
   },
   /* input이 focus일 경우 변경될 label의 font color 스타일 */
   span__focus: {
-    transition: "color ease-in-out 0.25s",
+    transition: "color linear 0.15s",
     color: props => {
       if(props.error) return theme.palette.error.main;
       if(theme.palette?.[props.color]) return theme.palette?.[props.color].main;
@@ -117,7 +118,7 @@ const useStyles = createUseStyles(theme=> ({
       }
       return "4px";
     },
-    transition: "box-shadow ease-in-out 0.25s",
+    transition: "box-shadow linear 0.15s",
   },
   /* startComponent와 endComponent를 포함한 input이 focus될 때의 스타일 */
   input__focus: {
@@ -159,7 +160,7 @@ const useStyles = createUseStyles(theme=> ({
       const right = props.endComponent ? "3px" : "10px";
       return `0 ${right} 0 ${left}`;
     },
-    fontSize: "16px",
+    fontSize: "15px",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
     userSelect: props => props.disabled ? "none" : "default",
     transition: props => props.multiline ? "none" : "all ease-in-out 0.25s",
@@ -184,15 +185,16 @@ const useStyles = createUseStyles(theme=> ({
       if(props.size === "small") return "120px";
     },
     height: props => {
-      if(props.height) return `${props.height - 28}px`; //padding 14*2를 빼줌.
-      if(props.size === "small") return "12px";
+      if(props.height) return props.height;
+      if(props.size === "small") return "40px";
+      return "50px";
     },
     padding: props => {
       const left = props.startComponent ? "3px" : "10px";
       const right = props.endComponent ? "3px" : "10px";
       return `14px ${right} 14px ${left}`;
     },
-    fontSize: "16px",
+    fontSize: "15px",
     fontFamily: "inherit",
     textAlign: "inherit",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
@@ -237,7 +239,7 @@ const useStyles = createUseStyles(theme=> ({
     opacity: 0,
     bottom: -10,
     left: 5,
-    fontSize: "14px",
+    fontSize: "13px",
     color: props => props.error ? theme.palette.error.main : "rgba(0, 0, 0, 0.78)",
     transition: "all ease-in-out 0.25s"
   },
@@ -251,6 +253,7 @@ const useStyles = createUseStyles(theme=> ({
 const CCTextField = forwardRef((props, ref) => {
   const classes = useStyles(props);
   const {
+    className,
     label,
     labelFixed,
     helpFixed, 
@@ -291,12 +294,9 @@ const CCTextField = forwardRef((props, ref) => {
     onChange && onChange(e);
   }
 
-  // useEffect(()=>{
-  // },[props.value])
-
   
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, className)}>
       <div className={clsx(classes.textfield__container,{[classes.textfield__error]:errorAnimation})}>
         <label className={clsx(
             classes.label,
