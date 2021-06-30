@@ -34,7 +34,7 @@ const useStyles = createUseStyles(theme => ({
 }));
 
 const CCSelect = forwardRef((props, ref) => {
-  const { label, onChange, children, height } = props;
+  const { label, onChange, children, height, width } = props;
   const classes = useStyles(props);
   const [isClick, setIsClick] = useState(false);
   const [showOption, setShowOption] = useState(false);
@@ -82,8 +82,8 @@ const CCSelect = forwardRef((props, ref) => {
       <CCTextField
         label={label}
         labelFixed={Boolean(value)}
-        width={100}
-        height={height || 30}
+        width={width || 200}
+        height={height || 40}
         endComponent={
           <CCIconButton 
             onClick={()=>{
@@ -91,7 +91,7 @@ const CCSelect = forwardRef((props, ref) => {
               if(!isClick)
                 setShowOption(true);
             }} 
-            size={height - 10 || 20}
+            size={height - 10 || 30}
           >
             <ArrowDropDown 
               style={{
@@ -113,7 +113,7 @@ const CCSelect = forwardRef((props, ref) => {
       {showOption && (
         <div
           className={clsx(classes.select__field,{[classes.show__field]: isClick})} 
-          style={{ top: fieldHeight + 10, width: fieldWidth }}
+          style={{ top: fieldHeight + 15, width: fieldWidth }}
           onTransitionEnd={()=>setShowOption(false)}
           ref={optionRef}
          >
