@@ -16,6 +16,7 @@ const useStyles = createUseStyles(theme => ({
     borderRadius: "4px",
     cursor: "pointer",
     backgroundColor: "#FFFFFF",
+    zIndex: 1,
     opacity: 0,
     overflow: "hidden",
     transition: "all linear 0.25s"
