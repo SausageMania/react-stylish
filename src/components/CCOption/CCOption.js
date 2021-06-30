@@ -36,7 +36,7 @@ const CCOption = forwardRef((props, ref) => {
       }}
       ref={ref}
       tabIndex="0"
-  onKeyDown={onKeyDownHandle}       
+      onKeyDown={onKeyDownHandle}       
     >
       {children}
     </span>

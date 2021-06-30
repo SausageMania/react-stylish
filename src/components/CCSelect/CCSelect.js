@@ -61,7 +61,13 @@ const CCSelect = forwardRef((props, ref) => {
       });
     }
     return child;
-  })
+  });
+
+  const showSelectHandle = () => {
+    setIsClick(!isClick);
+    if(!isClick)
+      setShowOption(true);
+  }
 
   useEffect(()=>{
     const listener = e => {
@@ -110,11 +116,7 @@ const CCSelect = forwardRef((props, ref) => {
         select
         endComponent={
           <CCIconButton 
-            onClick={()=>{
-              setIsClick(!isClick);
-              if(!isClick)
-                setShowOption(true);
-            }} 
+            onClick={showSelectHandle} 
             size={height - 10 || 30}
           >
             <ArrowDropDown 
@@ -125,10 +127,7 @@ const CCSelect = forwardRef((props, ref) => {
             />
           </CCIconButton>
         }
-        onClick={()=>{
-          setIsClick(true);
-          setShowOption(true);
-        }}
+        onClick={showSelectHandle}
         value={text}
         readOnly 
         ref={fieldRef}
