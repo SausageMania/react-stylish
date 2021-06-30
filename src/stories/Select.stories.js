@@ -1,5 +1,4 @@
-import { CCSelect } from '../components';
-import { CCOption } from '../components/CCSelect/Component';
+import { CCSelect, CCOption } from '../components';
 import React from 'react';
 
 export default {
@@ -9,8 +8,8 @@ export default {
   
 export const Select = ({...options}) => (
   <div style={{ padding: "5px" }}>
-    <CCSelect height={50} onSelect={(v, t)=>console.log(v + " " + t)}>
-      <CCOption value="123">test1</CCOption>
+    <CCSelect label="select" onChange={e => console.log(e.target.value)}>
+      <CCOption value="123">Very Very Long Long Super Long Name and more text is here!</CCOption>
       <CCOption value="456">test2</CCOption>
     </CCSelect>
   </div>

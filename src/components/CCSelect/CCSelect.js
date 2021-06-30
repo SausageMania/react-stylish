@@ -2,6 +2,7 @@ import React, { forwardRef, cloneElement, useState, useRef, useEffect } from 're
 import { CCTextField, CCIconButton } from '../../components';
 import { ArrowDropDown } from '@material-ui/icons';
 import { createUseStyles } from 'react-jss';
+import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme => ({
   text__field: {
@@ -9,25 +10,42 @@ const useStyles = createUseStyles(theme => ({
   },
   select__field: {
     position: "absolute",
-    overflow: "auto",
     boxShadow: "0 2px 1px -1px rgba(0, 0, 0, 0.20)," +
                 "0 1px 1px 0px rgba(0, 0, 0, 0.14)," +
                 "0 1px 3px 0px rgba(0, 0, 0, 0.12)",
     borderRadius: "4px",
     cursor: "pointer",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    opacity: 0,
+    overflow: "hidden",
+    transition: "all linear 0.25s"
   },
+  input__behind: {
+    position: "absolute",
+    zIndex: "-1",
+    top: props => props.height / 2 || 15,
+    border: "none",
+    outline: "none",
+    width: 0
+  },
+  show__field: {
+    opacity: 1,
+  }
 }));
 
 const CCSelect = forwardRef((props, ref) => {
-  const { onSelect, children, height } = props;
+  const { label, onChange, children, height } = props;
   const classes = useStyles(props);
   const [isClick, setIsClick] = useState(false);
+  const [showOption, setShowOption] = useState(false);
   const [fieldWidth, setFieldWidth] = useState(0);
   const [fieldHeight, setFieldHeight] = useState(0);
   const [text, setText] = useState("");
   const [value, setValue] = useState("");
+
   const fieldRef = useRef(null);
+  const inputRef = useRef(null);
+  const optionRef = useRef(null);
 
   const newChildren = children.map((child, index) => { 
     if(React.isValidElement(child)){
@@ -56,18 +74,25 @@ const CCSelect = forwardRef((props, ref) => {
 
   useEffect(()=>{
     if(value)
-      onSelect && onSelect(value, text);
-  },[value, text, onSelect]);
+      inputRef.current.focus();
+  },[value]);
 
   return (
-    <>
-    <div>1231231231</div>
     <div className={classes.text__field} ref={ref}>
-      <CCTextField 
+      <CCTextField
+        label={label}
+        labelFixed={Boolean(value)}
         width={100}
-        height={height}
+        height={height || 30}
         endComponent={
-          <CCIconButton onClick={()=>setIsClick(!isClick)} size={height - 10}>
+          <CCIconButton 
+            onClick={()=>{
+              setIsClick(!isClick);
+              if(!isClick)
+                setShowOption(true);
+            }} 
+            size={height - 10 || 20}
+          >
             <ArrowDropDown 
               style={{
                 transition: "transform ease-in-out 0.2s", 
@@ -76,16 +101,28 @@ const CCSelect = forwardRef((props, ref) => {
             />
           </CCIconButton>
         }
-        onClick={()=>setIsClick(true)}
+        onClick={()=>{
+          setIsClick(true);
+          setShowOption(true);
+        }}
         value={text}
         readOnly 
         ref={fieldRef} 
       />
-      <div className={classes.select__field} style={{ top: fieldHeight + 3, width: fieldWidth }}>
-        {newChildren}
-      </div>
+      <input className={classes.input__behind} value={value} ref={inputRef} onFocus={e => onChange(e)} readOnly />
+      {showOption && (
+        <div
+          className={clsx(classes.select__field,{[classes.show__field]: isClick})} 
+          style={{ top: fieldHeight + 10, width: fieldWidth }}
+          onTransitionEnd={()=>setShowOption(false)}
+          ref={optionRef}
+         >
+          {newChildren}
+        </div>
+      )}
+      
+      
     </div>
-    </>
   )
 });
 

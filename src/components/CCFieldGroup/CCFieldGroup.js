@@ -1,7 +1,7 @@
 import React, { forwardRef, cloneElement } from 'react';
 
 const CCFieldGroup = forwardRef((props, ref) => {
-  const {children, widthArr, ...others} = props;
+  const {children, widthArr} = props;
 
   const newChildren = children.map((child, index) => { 
     if(React.isValidElement(child)){

@@ -320,7 +320,6 @@ const CCTextField = forwardRef((props, ref) => {
     setHasValue(Boolean(e.target.value));
     onChange && onChange(e);
   }
-
   
   return (
     <div className={clsx(classes.root, className)}>

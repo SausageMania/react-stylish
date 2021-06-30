@@ -7,5 +7,6 @@ export {
   CCSwitch,
   CCTable,
   CCTextField,
-  CCFieldGroup
+  CCFieldGroup,
+  CCOption,
 } from '../src/components';

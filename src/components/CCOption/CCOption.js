@@ -3,11 +3,12 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles(theme => ({
   option__field: {
-    width: "100%",
+    padding: 5,
+    width: "calc(100% - 10px)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: props => props.height ? props.height : 30,
+    minHeight: 20,
     "&:hover": {
       backgroundColor: theme.palette.result.main,
     },
