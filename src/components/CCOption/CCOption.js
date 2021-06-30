@@ -8,17 +8,24 @@ const useStyles = createUseStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: 20,
+    minHeight: props => props.height - 10 || 30,
     "&:hover": {
       backgroundColor: theme.palette.result.main,
     },
   }
-
 }));
 
 const CCOption = forwardRef((props, ref) => {
-  const {children, value, setText, setValue} = props;
+  const {children, value, setText, setValue, setIsClick} = props;
   const classes = useStyles(props);
+
+  const onKeyDownHandle = e => {
+    if(e.key === "Enter" || e.key === " "){
+      setText(children);
+      setValue(value);
+      setIsClick(false);
+    }
+  }
 
   return (
     <span
@@ -28,6 +35,8 @@ const CCOption = forwardRef((props, ref) => {
         setValue(value);
       }}
       ref={ref}
+      tabIndex="0"
+  onKeyDown={onKeyDownHandle}       
     >
       {children}
     </span>

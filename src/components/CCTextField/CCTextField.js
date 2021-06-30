@@ -14,7 +14,6 @@ const useStyles = createUseStyles(theme=> ({
     },
     margin: "6px 0",
     width: props => props.fieldWidth && props.fieldWidth,
-
   },
   /* startComponent와 endComponent를 포함한 input의 기본 스타일 */
   textfield__container: {
@@ -187,6 +186,7 @@ const useStyles = createUseStyles(theme=> ({
       return `0 ${right} 0 ${left}`;
     },
     fontSize: "15px",
+    cursor: props => props.select && "pointer",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
     userSelect: props => props.disabled ? "none" : "default",
     transition: props => props.multiline ? "none" : "all ease-in-out 0.25s",
@@ -283,7 +283,8 @@ const CCTextField = forwardRef((props, ref) => {
     fieldWidth,
     label,
     labelFixed,
-    helpFixed, 
+    helpFixed,
+    select, 
     required,
     disabled, 
     fullWidth,
