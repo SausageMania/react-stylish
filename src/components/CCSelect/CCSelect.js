@@ -109,7 +109,7 @@ const CCSelect = forwardRef((props, ref) => {
         readOnly 
         ref={fieldRef} 
       />
-      <input className={classes.input__behind} value={value} ref={inputRef} onFocus={e => onChange(e)} readOnly />
+      <input className={classes.input__behind} value={value} ref={inputRef} onFocus={e => onChange && onChange(e)} readOnly />
       {showOption && (
         <div
           className={clsx(classes.select__field,{[classes.show__field]: isClick})} 
