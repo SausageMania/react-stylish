@@ -7,9 +7,10 @@ const useStyles = createUseStyles(theme=> ({
   /* 전체 textfield 스타일 */
   root: {
     padding: props => {
-      const top = props.label ? "16px" : "0px";
-      const bottom = props.helpComponent ? "16px" : "0px";
-      return `${top} 0 ${bottom} 0`
+      // const top = props.label ? "16px" : "0px";
+      // const bottom = props.helpComponent ? "16px" : "0px";
+      // return `${top} 0 ${bottom} 0`
+      return "8px 0 8px 0";
     },
     margin: "6px 0",
     width: props => props.fieldWidth && props.fieldWidth,
