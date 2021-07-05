@@ -65,8 +65,13 @@ const CCSelect = forwardRef((props, ref) => {
 
   const showSelectHandle = () => {
     setIsClick(!isClick);
-    if(!isClick)
+    
+    if(!isClick){
       setShowOption(true);
+      fieldRef?.current?.children[0]?.focus();
+    }
+    else
+      fieldRef?.current?.children[0]?.blur();
   }
 
   useEffect(()=>{
@@ -103,8 +108,7 @@ const CCSelect = forwardRef((props, ref) => {
       }
       else console.warn(`There is no component with value named '${defaultValue}'`);
     }
-  },[defaultValue, children])
-
+  },[defaultValue, children]);
 
   return (
     <div className={classes.text__field} ref={ref}>
