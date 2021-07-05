@@ -68,10 +68,9 @@ const CCSelect = forwardRef((props, ref) => {
     
     if(!isClick){
       setShowOption(true);
-      fieldRef?.current?.children[0]?.focus();
+      return fieldRef?.current?.children[0]?.focus();
     }
-    else
-      fieldRef?.current?.children[0]?.blur();
+    return fieldRef?.current?.children[0]?.blur();
   }
 
   useEffect(()=>{
