@@ -176,7 +176,6 @@ const useStyles = createUseStyles(theme=> ({
       return "none";
     },
     height: props => {
-      if(props.multiline) return "none";
       if(props.height) return props.height;
       if(props.size === "small") return "40px";
       return "50px";
@@ -212,6 +211,7 @@ const useStyles = createUseStyles(theme=> ({
       if(props.size === "small") return "120px";
     },
     height: props => {
+      if(props.multiline) return "none";
       if(props.height) return props.height;
       if(props.size === "small") return "40px";
       return "50px";
