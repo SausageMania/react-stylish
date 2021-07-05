@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const useStyles = createUseStyles(theme => ({
   table: {
     width: props => props.width ? props.width : "none",
-    height: props => props.height ? props.height : "none",
+    maxHeight: props => props.height ? props.height : "none",
     overflow: "auto",
     position: "relative",
     fontSize: props => props.fontSize ? props.fontSize : "none",
