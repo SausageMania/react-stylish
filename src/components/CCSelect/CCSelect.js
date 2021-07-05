@@ -124,7 +124,7 @@ const CCSelect = forwardRef((props, ref) => {
           >
             <ArrowDropDown 
               style={{
-                transition: "transform ease-in-out 0.25s", 
+                transition: "transform ease-out 0.2s", 
                 transform: isClick ? "rotate(180deg)" : "none",
               }}
             />
