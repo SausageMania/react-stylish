@@ -177,7 +177,7 @@ const useStyles = createUseStyles(theme=> ({
     },
     height: props => {
       if(props.height) return props.height;
-      if(props.multilie) return "none";
+      if(props.multiline) return "none";
       if(props.size === "small") return "40px";
       return "50px";
     },
