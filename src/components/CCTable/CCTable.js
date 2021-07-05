@@ -44,7 +44,7 @@ const useStyles = createUseStyles(theme => ({
       let totalWidth = 0;
       props.columns.forEach(column => {
         totalWidth += column.width ? column.width : 200;
-        totalWidth += 10; // 각 table당 margin값을 더해준다.
+        // totalWidth += 10; // 각 table당 margin값을 더해준다.
       })
       return totalWidth;
     },
@@ -118,7 +118,7 @@ const CCTable = forwardRef((props,ref) => {
                   className={classes.row__content} 
                   style={{
                     width: columns[index].width ? columns[index].width : 200,
-                    justifyContent: row.justify?.[columns[index].key],
+                    justifyContent: row.justify? row.justify?.[columns[index].key] : columns[index].justify,
                   }} 
                   key={index}
                 >
