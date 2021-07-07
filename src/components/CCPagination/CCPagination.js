@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { 
   ArrowBackIos, 
   ArrowForwardIos, 
@@ -125,6 +125,11 @@ const CCPagination = forwardRef((props, ref) => {
     onChange && onChange(e, newCurrPage);
     setCurrPage(newCurrPage);
   }
+
+  /* 만약 현재 페이지 번호가 존재가능한 페이지 수를 넘어갈 경우 1 페이지로 원위치 시킵니다. */
+  useEffect(()=>{
+    setCurrPage(prevState => count < prevState ? 1 : prevState);
+  },[count])
 
   return (
     <nav>
