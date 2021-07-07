@@ -17,7 +17,7 @@ const useStyles = createUseStyles(theme => ({
     borderRadius: "4px",
     cursor: "pointer",
     backgroundColor: "#FFFFFF",
-    zIndex: 1,
+    zIndex: 1000,
     opacity: 0,
     overflow: "auto",
     maxHeight: 500,
@@ -37,14 +37,14 @@ const useStyles = createUseStyles(theme => ({
 }));
 
 const CCSelect = forwardRef((props, ref) => {
-  const { defaultValue, label, onChange, children, height, width, fieldWidth, ...others } = props;
+  const { defaultValue, label, onChange, children, height, width, fieldWidth, value, ...others } = props;
   const classes = useStyles(props);
   const [isClick, setIsClick] = useState(false);
   const [showOption, setShowOption] = useState(false);
   const [optionWidth, setOptionWidth] = useState(0);
   const [optionHeight, setOptionHeight] = useState(0);
   const [text, setText] = useState("");
-  const [value, setValue] = useState("");
+  const [optionValue, setOptionValue] = useState(value);
 
   const fieldRef = useRef(null);
   const inputRef = useRef(null);
@@ -55,7 +55,7 @@ const CCSelect = forwardRef((props, ref) => {
       return cloneElement(child, {
         key: index, 
         setText: setText, 
-        setValue: setValue, 
+        setValue: setOptionValue, 
         setIsClick: setIsClick, 
         height: height
       });
@@ -93,32 +93,33 @@ const CCSelect = forwardRef((props, ref) => {
 
   /* value값이 바뀌면 숨겨진 input을 focus상태로 만들어 부모의 onChange event를 활성화시킴. */
   useEffect(()=>{
-    if(value || value === "")
+    if(optionValue || optionValue === "")
       inputRef.current.focus();
-  },[value]);
+  },[optionValue]);
 
   /* defaultValue값과 일치하는 option component를 찾고 해당 component의 text 값을 가져옴. */
   useEffect(()=>{
-    if(defaultValue){
-      const child = children.find(child => child.props.value === defaultValue);
+    if(value){
+      const child = children.find(child => child.props.value === value);
       if(child) {
         setText(child.props.children);
-        setValue(defaultValue);
+        setOptionValue(value);
       }
       else console.warn(`There is no component with value named '${defaultValue}'`);
     }
-  },[defaultValue, children]);
+  },[value, children]);
 
   return (
     <div className={classes.text__field} ref={ref}>
       <CCTextField
         label={label}
-        labelFixed={Boolean(value)}
+        labelFixed={Boolean(optionValue)}
         width={width || 200}
         height={height || 40}
         select
         endComponent={
           <CCIconButton 
+            color={props.color}
             onClick={showSelectHandle} 
             size={height - 10 || 30}
           >
@@ -139,7 +140,7 @@ const CCSelect = forwardRef((props, ref) => {
       <input 
         className={classes.input__behind} 
         onFocus={e => onChange && onChange(e)} 
-        value={value} 
+        value={optionValue} 
         readOnly 
         tabIndex="-1"
         ref={inputRef} 
