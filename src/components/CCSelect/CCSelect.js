@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 const useStyles = createUseStyles(theme => ({
   text__field: {
-    position: "relative",
+    // position: "relative",
     width: props => props.fieldWidth && props.fieldWidth,
   },
   select__field: {
@@ -79,8 +79,10 @@ const CCSelect = forwardRef((props, ref) => {
         return;
       setIsClick(false);
     };
-    setOptionWidth(fieldRef.current.getBoundingClientRect().width);
-    setOptionHeight(fieldRef.current.getBoundingClientRect().height);
+    const rect = fieldRef.current.getBoundingClientRect();
+    setOptionWidth(rect.width);
+    setOptionHeight(rect.top + rect.height);
+
 
     document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
@@ -103,7 +105,7 @@ const CCSelect = forwardRef((props, ref) => {
       const child = children.find(child => child.props.value === value);
       if(child) {
         setText(child.props.children);
-        setOptionValue(value);
+        // setOptionValue(value);
       }
       else console.warn(`There is no component with value named '${defaultValue}'`);
     }
@@ -148,7 +150,7 @@ const CCSelect = forwardRef((props, ref) => {
       {showOption && (
         <div
           className={clsx(classes.select__field,{[classes.show__field]: isClick})} 
-          style={{ top: optionHeight + 15, width: optionWidth }}
+          style={{ top: optionHeight + 5, width: optionWidth }}
           onTransitionEnd={()=>setShowOption(false)}
           ref={optionRef}
          >
