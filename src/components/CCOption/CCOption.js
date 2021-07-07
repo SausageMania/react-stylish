@@ -12,6 +12,7 @@ const useStyles = createUseStyles(theme => ({
     "&:hover": {
       backgroundColor: theme.palette.result.main,
     },
+    fontSize: 15,
   }
 }));
 
