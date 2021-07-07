@@ -93,9 +93,9 @@ const CCSelect = forwardRef((props, ref) => {
 
   /* value값이 바뀌면 숨겨진 input을 focus상태로 만들어 부모의 onChange event를 활성화시킴. */
   useEffect(()=>{
-    if(value)
+    if(value || value === "")
       inputRef.current.focus();
-  },[value, defaultValue]);
+  },[value]);
 
   /* defaultValue값과 일치하는 option component를 찾고 해당 component의 text 값을 가져옴. */
   useEffect(()=>{

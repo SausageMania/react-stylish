@@ -2,7 +2,6 @@ import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { isObjectType } from 'graphql';
 
 const useStyles = createUseStyles(theme=> ({
   /* 전체 textfield 스타일 */
