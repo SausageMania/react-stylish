@@ -8,3 +8,5 @@ export { default as CCIconButton } from './CCIconButton';
 export { default as CCSelect } from './CCSelect';
 export { default as CCFieldGroup } from './CCFieldGroup';
 export { default as CCOption } from './CCOption';
+export { default as CCDialog } from './CCDialog';
+export { default as CCDatePicker } from './CCDatePicker';

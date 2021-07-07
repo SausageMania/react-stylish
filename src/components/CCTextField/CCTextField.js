@@ -1,7 +1,8 @@
-import React, { forwardRef, useState, useRef } from 'react';
+import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { isObjectType } from 'graphql';
 
 const useStyles = createUseStyles(theme=> ({
   /* 전체 textfield 스타일 */
@@ -322,6 +323,11 @@ const CCTextField = forwardRef((props, ref) => {
     setHasValue(Boolean(e.target.value));
     onChange && onChange(e);
   }
+
+  useEffect(()=>{
+    if(props.value || props.defaultValue)
+      setHasValue(true);
+  },[props.value, props.defaultValue])
   
   return (
     <div className={clsx(classes.root, className)}>

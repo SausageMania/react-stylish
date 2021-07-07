@@ -9,4 +9,6 @@ export {
   CCTextField,
   CCFieldGroup,
   CCOption,
+  CCDialog,
+  CCDatePicker,
 } from '../src/components';

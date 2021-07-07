@@ -10,7 +10,7 @@ export default {
 export const IconButton = ({...options}) => ( 
   <CCIconButton {...options}>
     <Search />
-  </CCIconButton> 
+  </CCIconButton>
 );
 
 IconButton.storyName = "single.IconButton";
