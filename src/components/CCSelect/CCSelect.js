@@ -1,4 +1,10 @@
-import React, { forwardRef, cloneElement, useState, useRef, useEffect } from 'react';
+import React, { 
+  forwardRef, 
+  cloneElement, 
+  useState, useRef, 
+  useEffect, 
+  useMemo 
+} from 'react';
 import { CCTextField, CCIconButton } from '../../components';
 import { ArrowDropDown } from '@material-ui/icons';
 import { createUseStyles } from 'react-jss';
@@ -37,7 +43,18 @@ const useStyles = createUseStyles(theme => ({
 }));
 
 const CCSelect = forwardRef((props, ref) => {
-  const { defaultValue, label, onChange, children, height, width, fieldWidth, value, ...others } = props;
+  const { 
+    defaultValue, 
+    label, 
+    onChange, 
+    children, 
+    height, 
+    width, 
+    fieldWidth, 
+    value, 
+    autoComplete = false,
+    ...others 
+  } = props;
   const classes = useStyles(props);
   const [isClick, setIsClick] = useState(false);
   const [showOption, setShowOption] = useState(false);
@@ -62,6 +79,13 @@ const CCSelect = forwardRef((props, ref) => {
     }
     return child;
   });
+
+  const filteredChildren = useMemo(()=> {
+    if(newChildren && autoComplete && text){
+      return newChildren.filter(child => child.props.children.includes(text))
+    }
+    return newChildren;
+  },[newChildren, autoComplete, text])
 
   const showSelectHandle = () => {
     setIsClick(!isClick);
@@ -107,7 +131,7 @@ const CCSelect = forwardRef((props, ref) => {
         setText(child.props.children);
         // setOptionValue(value);
       }
-      else console.warn(`There is no component with value named '${defaultValue}'`);
+      else console.warn(`There is no component with value named '${value}'`);
     }
   },[value, children]);
 
@@ -135,7 +159,8 @@ const CCSelect = forwardRef((props, ref) => {
         }
         onClick={showSelectHandle}
         value={text}
-        readOnly 
+        readOnly={!Boolean(autoComplete)}
+        onChange={e => setText(e.target.value)}
         ref={fieldRef}
         {...others}
       />
@@ -154,7 +179,7 @@ const CCSelect = forwardRef((props, ref) => {
           onTransitionEnd={()=>setShowOption(false)}
           ref={optionRef}
          >
-          {newChildren}
+          {filteredChildren}
         </div>
       )}
       

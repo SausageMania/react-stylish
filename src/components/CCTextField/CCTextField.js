@@ -186,7 +186,7 @@ const useStyles = createUseStyles(theme=> ({
       return `0 ${right} 0 ${left}`;
     },
     fontSize: "15px",
-    cursor: props => props.select && "pointer",
+    cursor: props => (props.select && !props.autoComplete) && "pointer",
     color: props => props.disabled ? theme.palette.disabled.rgba : "#000",
     userSelect: props => props.disabled ? "none" : "default",
     transition: props => props.multiline ? "none" : "all ease-in-out 0.25s",
