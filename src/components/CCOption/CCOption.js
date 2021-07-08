@@ -31,7 +31,9 @@ const CCOption = forwardRef((props, ref) => {
   return (
     <span
       className={classes.option__field} 
-      onClick={()=>{
+      onClick={ e => {
+        if(e.target)
+          setIsClick(false);
         setText(children);
         setValue(value);
       }}

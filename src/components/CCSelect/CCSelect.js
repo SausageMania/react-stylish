@@ -71,6 +71,7 @@ const CCSelect = forwardRef((props, ref) => {
   const [optionValue, setOptionValue] = useState(value);
 
   const fieldRef = useRef(null);
+  const textRef = useRef(null);
   const inputRef = useRef(null);
   const optionRef = useRef(null);
 
@@ -80,7 +81,7 @@ const CCSelect = forwardRef((props, ref) => {
         key: index, 
         setText: setText, 
         setValue: setOptionValue, 
-        setIsClick: setIsClick, 
+        setIsClick: setIsClick,
         height: height
       });
     }
@@ -103,9 +104,9 @@ const CCSelect = forwardRef((props, ref) => {
     
     if(!isClick){
       setShowOption(true);
-      return fieldRef?.current?.children[0]?.focus();
+      return textRef?.current?.children[0]?.focus();
     }
-    return fieldRef?.current?.children[0]?.blur();
+    return textRef?.current?.children[0]?.blur();
   }
 
   useEffect(()=>{
@@ -114,7 +115,7 @@ const CCSelect = forwardRef((props, ref) => {
         return;
       setIsClick(false);
     };
-    const rect = fieldRef.current.getBoundingClientRect();
+    const rect = textRef.current.getBoundingClientRect();
     setOptionWidth(rect.width);
     setOptionHeight(rect.top + rect.height);
 
@@ -126,7 +127,7 @@ const CCSelect = forwardRef((props, ref) => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
     }
-  },[fieldRef]);
+  },[fieldRef, textRef]);
 
   /* value값이 바뀌면 숨겨진 input을 focus상태로 만들어 부모의 onChange event를 활성화시킴. */
   useEffect(()=>{
@@ -147,7 +148,7 @@ const CCSelect = forwardRef((props, ref) => {
   },[value, children]);
 
   return (
-    <div className={classes.text__field} ref={ref}>
+    <div className={classes.text__field} ref={fieldRef}>
       <CCTextField
         label={label}
         labelFixed={Boolean(optionValue)}
@@ -172,7 +173,7 @@ const CCSelect = forwardRef((props, ref) => {
         value={text}
         readOnly={!Boolean(autoComplete)}
         onChange={e => setText(e.target.value)}
-        ref={fieldRef}
+        ref={textRef}
         {...others}
       />
       <input 
