@@ -39,6 +39,13 @@ const useStyles = createUseStyles(theme => ({
   },
   show__field: {
     opacity: 1,
+  },
+  no__option: {
+    padding: 8,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "default"
   }
 }));
 
@@ -82,10 +89,14 @@ const CCSelect = forwardRef((props, ref) => {
 
   const filteredChildren = useMemo(()=> {
     if(newChildren && autoComplete && text){
+      const filter = newChildren.filter(child => child.props.children.includes(text));
+      if(filter.length === 0){
+        return <div className={classes.no__option}>no option</div>;  
+      }
       return newChildren.filter(child => child.props.children.includes(text))
     }
     return newChildren;
-  },[newChildren, autoComplete, text])
+  },[newChildren, autoComplete, text, classes])
 
   const showSelectHandle = () => {
     setIsClick(!isClick);
