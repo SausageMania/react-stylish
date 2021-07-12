@@ -52,6 +52,7 @@ const useStyles = createUseStyles(theme => ({
   row__body: {
     display: "flex",
     alignItems: "center",
+    cursor: props => props.disableSelect ? "default" : "pointer",
     "&:hover": {
       backgroundColor: props => !props.disableHover && theme.palette.result.main,
     }
