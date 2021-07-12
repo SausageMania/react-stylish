@@ -17,7 +17,7 @@ const useStyles = createUseStyles(theme => ({
 }));
 
 const CCOption = forwardRef((props, ref) => {
-  const {children, value, setText, setValue, setIsClick} = props;
+  const {children, value, setText, setValue, setIsClick, onClick} = props;
   const classes = useStyles(props);
 
   const onKeyDownHandle = e => {
@@ -36,6 +36,7 @@ const CCOption = forwardRef((props, ref) => {
           setIsClick(false);
         setText(children);
         setValue(value);
+        onClick && onClick(e);
       }}
       ref={ref}
       tabIndex="0"
