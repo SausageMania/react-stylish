@@ -280,6 +280,7 @@ const useStyles = createUseStyles(theme=> ({
 const CCTextField = forwardRef((props, ref) => {
   const classes = useStyles(props);
   const {
+    value,
     className,
     fieldWidth,
     label,
@@ -366,6 +367,7 @@ const CCTextField = forwardRef((props, ref) => {
               onChange={onChangeHandle}
               placeholder={isFocus || labelFixed || !label || startComponent ? placeholder : ""}
               disabled={disabled}
+              value={value || ""}
               {...others}
             />
           ) : (
@@ -377,6 +379,7 @@ const CCTextField = forwardRef((props, ref) => {
               placeholder={isFocus || labelFixed || !label || startComponent ? placeholder : ""}
               disabled={disabled}
               ref={inputRef}
+              value={value || ""}
               {...others} 
             />
           )}
