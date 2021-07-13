@@ -112,8 +112,8 @@ const CCTable = forwardRef((props,ref) => {
                 [classes.row__selected]: selectedRow === index && !disableSelect,
               }
             )}
-            onClick={()=>{
-              onSelect && onSelect(row);
+            onClick={e =>{
+              onSelect && onSelect(e, row);
               setSelectedRow(index)
             }}
           >
