@@ -58,7 +58,7 @@ const CCSelect = forwardRef((props, ref) => {
     height, 
     width, 
     fieldWidth, 
-    value, 
+    value = "", 
     autoComplete = false,
     ...others 
   } = props;
