@@ -207,6 +207,7 @@ const CCButton = forwardRef((props, ref) => {
   const {
     children,
     className, 
+    type="button",
     onMouseDown, 
     onMouseUp, 
     onClick, 
@@ -264,6 +265,7 @@ const CCButton = forwardRef((props, ref) => {
       onMouseUp={onMouseUpHandle}
       onAnimationEnd={()=>setIsRippling(false)}
       ref={ref}
+      type={type}
       {...others}
     >
       {isRippling && (

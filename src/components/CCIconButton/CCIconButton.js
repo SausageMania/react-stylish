@@ -3,10 +3,17 @@ import { CCButton } from '../../components';
 import PropTypes from 'prop-types';
 
 const CCIconButton = forwardRef((props, ref) => {
-  const {children, ...others} = props;
+  const {children, type="button", ...others} = props;
 
   return (
-    <CCButton round={99} square={props.size + 10} disablePadding ref={ref} {...others}>
+    <CCButton 
+      round={99} 
+      square={props.size + 10}
+      disablePadding 
+      ref={ref} 
+      type={type}
+      {...others}
+    >
       {children}
     </CCButton>
   );
