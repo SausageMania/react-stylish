@@ -13,6 +13,11 @@ const useStyles = createUseStyles(theme => ({
       backgroundColor: theme.palette.result.main,
     },
     fontSize: 15,
+    color: props => {
+      if(props.color)
+        return theme.palette?.[props.color].main;
+      return null;
+    }
   }
 }));
 
