@@ -109,7 +109,7 @@ const CCTable = forwardRef((props,ref) => {
             className={clsx(classes.row__body,
               {
                 [classes.row__border]:rows.length -1 !== index,
-                [classes.row__selected]: selectedRow === index && !disableSelect,
+                // [classes.row__selected]: selectedRow === index && !disableSelect,
               }
             )}
             onClick={e =>{
