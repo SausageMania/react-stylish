@@ -80,7 +80,7 @@ const useStyles = createUseStyles(theme => ({
 }));
 
 const CCTable = forwardRef((props,ref) => {
-  const {columns, rows, disableSelect, onSelect} = props;
+  const {columns, rows, disableSelect, onSelect, allSelect} = props;
   const classes = useStyles(props);
 
   const [selectedRow, setSelectedRow] = useState(-1);
@@ -108,7 +108,7 @@ const CCTable = forwardRef((props,ref) => {
             key={index} 
             className={clsx(classes.row__body,
               {
-                [classes.row__border]:rows.length -1 !== index,
+                [classes.row__border]: rows.length -1 !== index,
                 // [classes.row__selected]: selectedRow === index && !disableSelect,
               }
             )}
