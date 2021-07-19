@@ -14,8 +14,11 @@ const useStyles = createUseStyles(theme => ({
     },
     fontSize: 15,
     color: props => {
-      if(props.color)
-        return theme.palette?.[props.color].main;
+      if(props.color){
+        if(theme.palette?.[props.color])
+          return theme.palette?.[props.color].main;
+        return props.color;
+      }
       return null;
     }
   }
