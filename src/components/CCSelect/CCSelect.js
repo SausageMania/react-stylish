@@ -55,6 +55,7 @@ const CCSelect = forwardRef((props, ref) => {
     fieldWidth,
     value,
     autoComplete = false,
+    endComponent,
     ...others
   } = props;
   const classes = useStyles(props);
@@ -147,14 +148,17 @@ const CCSelect = forwardRef((props, ref) => {
         height={height || 40}
         select
         endComponent={
-          <CCIconButton color={props.color} onClick={showSelectHandle} size={height - 10 || 30}>
-            <ArrowDropDown
-              style={{
-                transition: 'transform ease-out 0.2s',
-                transform: isClick ? 'rotate(180deg)' : 'none',
-              }}
-            />
-          </CCIconButton>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {endComponent}
+            <CCIconButton color={props.color} onClick={showSelectHandle} size={height - 10 || 30}>
+              <ArrowDropDown
+                style={{
+                  transition: 'transform ease-out 0.2s',
+                  transform: isClick ? 'rotate(180deg)' : 'none',
+                }}
+              />
+            </CCIconButton>
+          </div>
         }
         onClick={showSelectHandle}
         value={text}
