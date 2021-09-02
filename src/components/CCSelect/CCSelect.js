@@ -49,13 +49,14 @@ const CCSelect = forwardRef((props, ref) => {
     defaultValue,
     label,
     onChange,
+    onClose,
     children,
     height,
     width,
     fieldWidth,
     value,
     autoComplete = false,
-    endComponent,
+    closeIcon,
     ...others
   } = props;
   const classes = useStyles(props);
@@ -105,6 +106,11 @@ const CCSelect = forwardRef((props, ref) => {
     return textRef?.current?.children[0]?.blur();
   };
 
+  const closeIconClick = () => {
+    onClose && onClose();
+    setText(null);
+  };
+
   useEffect(() => {
     const listener = e => {
       if (!fieldRef.current || fieldRef.current.contains(e.target)) return;
@@ -149,7 +155,7 @@ const CCSelect = forwardRef((props, ref) => {
         select
         endComponent={
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            {endComponent}
+            {text && <CCIconButton onClick={closeIconClick}>{closeIcon}</CCIconButton>}
             <CCIconButton color={props.color} onClick={showSelectHandle} size={height - 10 || 30}>
               <ArrowDropDown
                 style={{

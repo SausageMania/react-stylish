@@ -248,7 +248,7 @@ const useStyles = createUseStyles(theme => ({
   /* textfield가 focus상태가 아닐때의 스타일 */
   extra__not__focus: {
     color: props => (props.disabled ? theme.palette.disabled.rgba : 'rgba(0, 0, 0, 0.50)'),
-    '& > *': {
+    '& > * > *': {
       color: props => (props.disabled ? theme.palette.disabled.rgba : 'rgba(0, 0, 0, 0.50)'),
     },
   },
