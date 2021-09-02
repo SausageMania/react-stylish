@@ -155,7 +155,9 @@ const CCSelect = forwardRef((props, ref) => {
         select
         endComponent={
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            {text && <CCIconButton onClick={closeIconClick}>{closeIcon}</CCIconButton>}
+            {autoComplete && text && (
+              <CCIconButton onClick={closeIconClick}>{closeIcon}</CCIconButton>
+            )}
             <CCIconButton color={props.color} onClick={showSelectHandle} size={height - 10 || 30}>
               <ArrowDropDown
                 style={{
