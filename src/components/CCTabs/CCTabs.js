@@ -41,7 +41,7 @@ const useStyles = createUseStyles((theme) => ({
       if (props.underlineColor) {
         if (theme.palette[props.underlineColor])
           return theme.palette[props.underlineColor].main;
-        return props.underlinColor;
+        return props.underlineColor;
       }
       if (props.color?.length > 0) {
         if (theme.palette[props.color[1]])
