@@ -219,6 +219,7 @@ const CCButton = forwardRef((props, ref) => {
     onMouseUp,
     onClick,
     startIcon,
+    textColor,
     endIcon,
     fullWidth,
     disableRipple,
