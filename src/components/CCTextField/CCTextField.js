@@ -419,7 +419,7 @@ const CCTextField = forwardRef((props, ref) => {
         {helpComponent && (
           <label
             className={clsx(classes.help__component, {
-              [classes.help__component__focus]: isFocus || helpFixed,
+              [classes.help__component__focus]: isFocus || helpFixed || error,
             })}
           >
             {helpComponent}

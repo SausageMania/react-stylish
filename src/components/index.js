@@ -11,3 +11,4 @@ export { default as CCOption } from "./CCOption";
 export { default as CCDialog } from "./CCDialog";
 export { default as CCDatePicker } from "./CCDatePicker";
 export { default as CCPhoneField } from "./CCPhoneField";
+export { default as CCTabs } from "./CCTabs";
