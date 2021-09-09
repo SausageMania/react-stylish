@@ -11,4 +11,5 @@ export {
   CCOption,
   CCDialog,
   CCDatePicker,
-} from '../src/components';
+  CCTabs,
+} from "../src/components";
