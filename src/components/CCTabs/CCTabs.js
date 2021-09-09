@@ -1,62 +1,53 @@
-import React, {
-  forwardRef,
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react";
-import { CCButton } from "../../components";
-import { createUseStyles } from "react-jss";
-import PropTypes from "prop-types";
+import React, { forwardRef, useState, useRef, useEffect, useCallback } from 'react';
+import { CCButton } from '../../components';
+import { createUseStyles } from 'react-jss';
+import PropTypes from 'prop-types';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(theme => ({
   root: {
-    display: "inline-block",
+    display: 'inline-block',
   },
   content: {
-    whiteSpace: "nowrap",
-    overflowX: "auto",
-    overflowY: "hidden",
+    whiteSpace: 'nowrap',
+    overflowX: 'auto',
+    overflowY: 'hidden',
   },
   tab: {
-    position: "relative",
-    textAlign: (props) => props.align,
-    backgroundColor: (props) => {
+    position: 'relative',
+    textAlign: props => props.align,
+    backgroundColor: props => {
       if (props.color?.length > 0) {
-        if (theme.palette[props.color[0]])
-          return theme.palette[props.color[0]].main;
+        if (theme.palette[props.color[0]]) return theme.palette[props.color[0]].main;
         return props.color[0];
       }
-      return "none";
+      return 'none';
     },
-    width: (props) => {
-      if (props.fullWidth) return "100%";
+    width: props => {
+      if (props.fullWidth) return '100%';
       return props.width;
     },
   },
   underline: {
-    position: "absolute",
+    position: 'absolute',
     height: 3,
-    backgroundColor: (props) => {
+    backgroundColor: props => {
       if (props.underlineColor) {
-        if (theme.palette[props.underlineColor])
-          return theme.palette[props.underlineColor].main;
+        if (theme.palette[props.underlineColor]) return theme.palette[props.underlineColor].main;
         return props.underlineColor;
       }
       if (props.color?.length > 0) {
-        if (theme.palette[props.color[1]])
-          return theme.palette[props.color[1]].main;
+        if (theme.palette[props.color[1]]) return theme.palette[props.color[1]].main;
         return props.color[1];
       }
       return theme.palette.selected.main;
     },
-    transition: "all 0.2s ease-out",
+    transition: 'all 0.2s ease-out',
   },
 }));
 
 const CCTabs = forwardRef((props, ref) => {
   const {
-    color = [null, "selected", "#000"],
+    color = [null, 'selected', '#000'],
     tabList,
     value = tabList[0].value,
     onChange,
@@ -72,13 +63,13 @@ const CCTabs = forwardRef((props, ref) => {
   const [tabStyle, setTabStyle] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
-  const tabClick = (value) => {
+  const tabClick = value => {
     onChange && onChange(value);
   };
 
   const lineStyle = useCallback(() => {
     const tab = tabRef?.current.children[tabIndex];
-    tab.scrollIntoView({ behavior: "smooth", inline: "center" });
+    tab.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     setTabStyle({
       width: tab.offsetWidth,
       left: tab.offsetLeft,
@@ -92,11 +83,11 @@ const CCTabs = forwardRef((props, ref) => {
       lineStyle();
       notResize = false;
     };
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
     notResize && lineStyle();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener('resize', resize);
     };
   }, [lineStyle]);
 
@@ -111,7 +102,7 @@ const CCTabs = forwardRef((props, ref) => {
           {tabList.map((tab, idx) => (
             <CCButton
               key={tab.value}
-              variant={"text"}
+              variant={'text'}
               round={1}
               color={value === tab.value ? color[1] : color[2]}
               onClick={() => {
@@ -126,7 +117,7 @@ const CCTabs = forwardRef((props, ref) => {
             </CCButton>
           ))}
         </div>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: 'relative' }}>
           <div className={classes.underline} style={tabStyle} />
         </div>
       </div>
@@ -140,21 +131,10 @@ CCTabs.propTypes = {
   width: PropTypes.number,
   tabWidth: PropTypes.number,
   underlineColor: PropTypes.oneOfType([
-    PropTypes.oneOf([
-      "primary",
-      "secondary",
-      "error",
-      "warning",
-      "sub",
-      "icon",
-    ]),
+    PropTypes.oneOf(['primary', 'secondary', 'error', 'warning', 'sub', 'icon']),
     PropTypes.string,
   ]),
-  align: PropTypes.oneOf(["left", "right", "center"]),
-};
-
-CCTabs.defaultProps = {
-  underlineColor: "selected",
+  align: PropTypes.oneOf(['left', 'right', 'center']),
 };
 
 export default CCTabs;
