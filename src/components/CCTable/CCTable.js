@@ -90,11 +90,11 @@ const CCTable = forwardRef((props, ref) => {
 
   const handleScroll = useCallback(
     ([entry]) => {
-      if (entry.isIntersecting && rows.length > 0 && !loading) {
+      if (entry.isIntersecting && !loading && rows.length > 0) {
         onScrollEnd && onScrollEnd();
       }
     },
-    [onScrollEnd, rows],
+    [onScrollEnd, rows, loading],
   );
 
   useEffect(() => {
