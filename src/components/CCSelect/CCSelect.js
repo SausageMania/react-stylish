@@ -109,6 +109,7 @@ const CCSelect = forwardRef((props, ref) => {
   const closeIconClick = () => {
     onClose && onClose();
     setText(null);
+    setOptionValue('');
   };
 
   useEffect(() => {
@@ -149,7 +150,7 @@ const CCSelect = forwardRef((props, ref) => {
     <div className={classes.text__field} ref={fieldRef}>
       <CCTextField
         label={label}
-        labelFixed={Boolean(optionValue) || optionValue === ''}
+        labelFixed={Boolean(optionValue)}
         width={width || 200}
         height={height || 40}
         select
@@ -171,7 +172,10 @@ const CCSelect = forwardRef((props, ref) => {
         onClick={showSelectHandle}
         value={text}
         readOnly={!Boolean(autoComplete)}
-        onChange={e => setText(e.target.value)}
+        onChange={e => {
+          if (e.target.value === '') setOptionValue('');
+          setText(e.target.value);
+        }}
         ref={textRef}
         {...others}
       />
