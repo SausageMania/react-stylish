@@ -9,8 +9,9 @@ import {
   CCTable,
   CCTabs,
 } from "./components";
+import { usePopper } from "react-popper";
 
-const styles = createUseStyles({
+const useStyles = createUseStyles({
   container: {
     paddingLeft: "15px",
   },
@@ -88,7 +89,7 @@ const tabList = [
 ];
 
 const App = () => {
-  const classes = styles();
+  const classes = useStyles();
 
   const [text, setText] = useState({
     content: null,
@@ -98,6 +99,17 @@ const App = () => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState(0);
   const [move, setMove] = useState(false);
+
+  const [popper, setPopper] = useState(false);
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const [arrowElement, setArrowElement] = useState(null);
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    modifiers: [{ name: "arrow", options: { element: arrowElement } }],
+    placement: "top",
+  });
+
+  console.log(styles.popper);
 
   const onClickHandle = () => {
     setText({ content: "You clicked", count: text.count + 1 });
@@ -187,6 +199,28 @@ const App = () => {
         <CCButton variant="outlined" onClick={() => setMove(!move)}>
           Move
         </CCButton>
+        <div style={{ marginBottom: 15 }}>
+          <button
+            type="button"
+            ref={setReferenceElement}
+            onClick={() => setPopper(!popper)}
+          >
+            Reference element
+          </button>
+          {popper && (
+            <div
+              ref={setPopperElement}
+              style={{ ...styles.popper }}
+              {...attributes.popper}
+            >
+              Popper element
+              <div
+                ref={setArrowElement}
+                style={{ ...styles.arrow, border: "5px solid black" }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </ThemeProvider>
   );
