@@ -130,7 +130,6 @@ const CCSelect = forwardRef((props, ref) => {
       setIsClick(false);
     };
 
-    console.log(textRef?.offsetWidth);
     // const rect = textRef.current.getBoundingClientRect();
     textRef && setOptionWidth(textRef?.offsetWidth);
     // setOptionHeight(rect.top + rect.height);
