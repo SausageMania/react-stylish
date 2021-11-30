@@ -18,7 +18,7 @@ const useStyles = createUseStyles(theme => ({
         if (theme.palette?.[props.color]) return theme.palette?.[props.color].main;
         return props.color;
       }
-      return null;
+      return 'black';
     },
   },
 }));
